@@ -1,5 +1,5 @@
-type Player = {
-    metadata: any; // Could be null or an object, depending on your needs
+type PlayerRaw = {
+    metadata: any;
     player_id: string;
     search_last_name: string;
     full_name: string;
@@ -51,7 +51,40 @@ type Player = {
     gsis_id: string | null;
     team: string | null;
     rank: number | null;
-  };
-  
-  type FilteredPlayers = Player[];
-  
+    [key: string]: any;
+};
+
+type Player = Omit<
+    PlayerRaw,
+    | "metadata"
+    | "search_last_name"
+    | "oddsjam_id"
+    | "sport"
+    | "pandascore_id"
+    | "espn_id"
+    | "news_updated"
+    | "practice_description"
+    | "birth_city"
+    | "fantasy_data_id"
+    | "hashtag"
+    | "yahoo_id"
+    | "birth_date"
+    | "birth_state"
+    | "birth_country"
+    | "search_full_name"
+    | "high_school"
+    | "injury_body_part"
+    | "team_abbr"
+    | "competitions"
+    | "injury_start_date"
+    | "swish_id"
+    | "rotowire_id"
+    | "stats_id"
+    | "team_changed_at"
+    | "rotoworld_id"
+    | "search_first_name"
+    | "opta_id"
+    | "gsis_id"
+>;
+
+type FilteredPlayers = PlayerRaw[];
