@@ -3,13 +3,12 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
+import { useAtom } from 'jotai';
+import { filteredPlayersAtom, currentBoardAtom } from "./Atoms";
 
-interface PlayerTableProps {
-    data: Player[];
-}
-
-export function PlayerTable({ data }: PlayerTableProps) {
-    const [rowData, setRowData] = useState(data);
+export function PlayerTable() {
+    const [rowData] = useAtom(filteredPlayersAtom);
+    const [board, setBoard] = useAtom(currentBoardAtom);
 
     const defaultColDef = useMemo(() => {
         return {
@@ -46,7 +45,6 @@ export function PlayerTable({ data }: PlayerTableProps) {
     ]);
 
     const onRowDragEnd = (event: RowDragEvent) => {
-        console.log("test");
         const draggedData = event.node.data;
         const updatedData = [...rowData];
 
@@ -63,7 +61,7 @@ export function PlayerTable({ data }: PlayerTableProps) {
                 player.rank = index + 1;
             });
 
-            setRowData(updatedData);
+            setBoard({...board, Players: updatedData});
         }
     };
 

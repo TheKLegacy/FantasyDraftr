@@ -10,6 +10,7 @@ export type FilterValues = {
     DL: boolean;
     LB: boolean;
     DB: boolean;
+    [key: string]: any;
 };
 
 export type Board = {

@@ -10,21 +10,20 @@ import {
 
 type DraftBoardDialogProps = {
   open: boolean;
-  onClose?: () => void;
+  onClose: () => void;
   onCreate?: (name: string) => void;
 };
 
 const CreateBoardModal: React.FC<DraftBoardDialogProps> = ({ open, onClose, onCreate }) => {
-  const [draftBoardName, setDraftBoardName] = useState('');
 
   const handleCreate = () => {
-    onCreate(draftBoardName.trim());
-    setDraftBoardName(''); // Clear input after creating
+    //onCreate(draftBoardName.trim());
+    //setDraftBoardName(''); // Clear input after creating
     onClose(); // Close dialog
   };
 
   const handleCancel = () => {
-    setDraftBoardName(''); // Reset the input field
+    //setDraftBoardName(''); // Reset the input field
     onClose(); // Close dialog
   };
 
@@ -37,8 +36,8 @@ const CreateBoardModal: React.FC<DraftBoardDialogProps> = ({ open, onClose, onCr
           margin="dense"
           label="Draft Board Name"
           fullWidth
-          value={draftBoardName}
-          onChange={(e) => setDraftBoardName(e.target.value)}
+          //value={draftBoardName}
+          //onChange={(e) => setDraftBoardName(e.target.value)}
         />
       </DialogContent>
       <DialogActions>
@@ -49,7 +48,7 @@ const CreateBoardModal: React.FC<DraftBoardDialogProps> = ({ open, onClose, onCr
           onClick={handleCreate}
           color="primary"
           variant="contained"
-          disabled={!draftBoardName.trim()}
+          //disabled={!draftBoardName.trim()}
         >
           Create
         </Button>

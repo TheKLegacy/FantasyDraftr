@@ -60,8 +60,8 @@ export function Actions({ data }: PlayerDataProps) {
                 </IconButton>
             </div>
             <Filters data={data} />
-            <DeleteModal open={openDeleteModal}/>
-            <CreateBoardModal open={openBoardModal}/>
+            <DeleteModal open={openDeleteModal} onClose={() => {setOpenDeleteModal(false)}}/>
+            <CreateBoardModal open={openBoardModal} onClose={() => {setOpenBoardModal(false)}}/>
         </>
     );
 }

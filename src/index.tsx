@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 import playerData from '../data/players.json';
@@ -8,6 +8,8 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { useAtom } from 'jotai';
+import { currentBoardAtom, currentPlayersAtom } from "./Atoms";
 
 // Create a dark theme
 const darkTheme = createTheme({
@@ -17,6 +19,10 @@ const darkTheme = createTheme({
 });
 
 const App: React.FC = () => {
+  const [players] = useAtom(currentPlayersAtom);
+  const [board, setBoard] = useAtom(currentBoardAtom);
+
+  useEffect(() => {
     //TODO: Make a call to my API to get the data
     const filteredPlayers = Object.values(playerData)
         .filter(player => typeof player.search_rank === 'number' && !isNaN(player.search_rank))
@@ -47,11 +53,16 @@ const App: React.FC = () => {
     const sizeInMB = file.size / (1024 * 1024);
     console.log(`File size: ${sizeInMB.toFixed(2)} MB`);
 
+    setBoard({...board, Players: cleanedPlayers})
+  }, []);
+
+    
+
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline /> {/* Ensures dark theme is applied globally */}
-            <Actions data={cleanedPlayers} />
-            <PlayerTable data={cleanedPlayers} />
+            <Actions data={players} />
+            <PlayerTable/>
         </ThemeProvider>
     );
 };
