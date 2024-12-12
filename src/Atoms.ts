@@ -1,14 +1,38 @@
 import { atom } from 'jotai'
 import { Board, FilterValues } from './Types'
 import { initialBoard } from './InitialData'
+import { atomWithStorage } from 'jotai/utils'
 
-export const currentBoardAtom = atom<Board>(initialBoard);
+export const currentBoardAtom = atom<String>("Unnamed Board");
 
-export const currentBoardNameAtom = atom((get) => get(currentBoardAtom).Name);
+export const getCurrentBoard = atom((get) => {
+    const name = get(currentBoardAtom);
+    const board = get(allBoardsAtom);
+    return board.find(b => b.Name === name) ?? {...initialBoard } ;
+})
 
-export const currentFiltersAtom = atom((get) => get(currentBoardAtom).Filters);
+export const updateBoard = atom(null, (get, set, payload: Board) => {
+    const allBoards = get(allBoardsAtom);
+    const updatedBoards = allBoards.map((board) =>
+        board.Name === payload.Name ? payload : board
+    );
+    set(allBoardsAtom, updatedBoards);
+});
 
-export const currentPlayersAtom = atom((get) => get(currentBoardAtom).Players);
+export const updateBoardName = atom(null, (get, set, payload: Board & {NewName: string}) => {
+    console.log("payload", payload)
+    const allBoards = get(allBoardsAtom);
+    const updatedBoards = allBoards.map((board) =>
+        board.Name === payload.Name ? { ...payload, Name: payload.NewName, NewName: undefined } as Board : board
+    );
+
+    set(currentBoardAtom, payload.NewName);
+    set(allBoardsAtom, updatedBoards);
+});
+
+export const currentFiltersAtom = atom((get) => get(getCurrentBoard).Filters);
+
+export const currentPlayersAtom = atom((get) => get(getCurrentBoard).Players);
 
 export const filteredPlayersAtom = atom((get) => { 
     const players = get(currentPlayersAtom);
@@ -34,4 +58,6 @@ export const filteredPlayersAtom = atom((get) => {
     return filterPlayers(players, filters);
 });
 
-export const allBoardsAtom = atom<Board[]>([initialBoard]);
+export const allBoardsAtom = atomWithStorage<Board[]>("DraftBoards", [initialBoard]);
+
+export const cleanedPlayersAtom = atom<Player[]>([]);

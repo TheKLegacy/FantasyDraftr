@@ -7,24 +7,29 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material';
+import { useAtom } from "jotai";
+import { allBoardsAtom, cleanedPlayersAtom } from "./Atoms";
+import { initialBoard } from './InitialData';
 
 type DraftBoardDialogProps = {
   open: boolean;
   onClose: () => void;
-  onCreate?: (name: string) => void;
 };
 
-const CreateBoardModal: React.FC<DraftBoardDialogProps> = ({ open, onClose, onCreate }) => {
+const CreateBoardModal: React.FC<DraftBoardDialogProps> = ({ open, onClose }) => {
+  const [boards, setBoards] = useAtom(allBoardsAtom);
+  const [cleanedPlayers] = useAtom(cleanedPlayersAtom)
+  const [newBoardName, setNewBoardName] = useState<string>('');
 
-  const handleCreate = () => {
-    //onCreate(draftBoardName.trim());
-    //setDraftBoardName(''); // Clear input after creating
-    onClose(); // Close dialog
+  const handleCreate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setBoards([...boards, {...initialBoard, Name:newBoardName, Players: cleanedPlayers}])
+    setNewBoardName('')
+    onClose();
   };
 
   const handleCancel = () => {
-    //setDraftBoardName(''); // Reset the input field
-    onClose(); // Close dialog
+    setNewBoardName('')
+    onClose();
   };
 
   return (
@@ -36,8 +41,8 @@ const CreateBoardModal: React.FC<DraftBoardDialogProps> = ({ open, onClose, onCr
           margin="dense"
           label="Draft Board Name"
           fullWidth
-          //value={draftBoardName}
-          //onChange={(e) => setDraftBoardName(e.target.value)}
+          value={newBoardName}
+          onChange={(e) => setNewBoardName(e.target.value)}
         />
       </DialogContent>
       <DialogActions>
@@ -48,7 +53,7 @@ const CreateBoardModal: React.FC<DraftBoardDialogProps> = ({ open, onClose, onCr
           onClick={handleCreate}
           color="primary"
           variant="contained"
-          //disabled={!draftBoardName.trim()}
+          disabled={!newBoardName.trim()}
         >
           Create
         </Button>

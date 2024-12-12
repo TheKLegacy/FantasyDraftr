@@ -1,14 +1,16 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
-import { useAtom } from 'jotai';
-import { filteredPlayersAtom, currentBoardAtom } from "./Atoms";
+import { useAtomValue, useSetAtom  } from 'jotai';
+import { filteredPlayersAtom, getCurrentBoard, updateBoard, currentPlayersAtom } from "./Atoms";
 
 export function PlayerTable() {
-    const [rowData] = useAtom(filteredPlayersAtom);
-    const [board, setBoard] = useAtom(currentBoardAtom);
+    const rowData = useAtomValue(filteredPlayersAtom);
+    const currentPlayers = useAtomValue(currentPlayersAtom)
+    const board = useAtomValue(getCurrentBoard);
+    const setBoard = useSetAtom(updateBoard);
 
     const defaultColDef = useMemo(() => {
         return {
@@ -46,16 +48,18 @@ export function PlayerTable() {
 
     const onRowDragEnd = (event: RowDragEvent) => {
         const draggedData = event.node.data;
-        const updatedData = [...rowData];
+        const updatedData = [...currentPlayers];
 
         const draggedIndex = updatedData.findIndex(
             (item) => item.player_id === draggedData.player_id
         );
 
         if (draggedIndex !== -1) {
+            const newIndex=updatedData.findIndex(p => p.player_id === rowData[event.overIndex].player_id)
+
             updatedData.splice(draggedIndex, 1);
 
-            updatedData.splice(event.overIndex, 0, draggedData);
+            updatedData.splice(newIndex, 0, draggedData);
 
             updatedData.forEach((player, index) => {
                 player.rank = index + 1;

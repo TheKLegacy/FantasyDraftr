@@ -1,5 +1,4 @@
 import {
-    Button,
     FormControl,
     IconButton,
     InputLabel,
@@ -11,15 +10,20 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useState } from "react";
 import { Filters } from "./Filters";
 import DeleteModal from "./DeleteModal";
-import CreateBoardModal from "./CreateBoardModal";
+import { useAtomValue, useSetAtom } from "jotai";
+import { getCurrentBoard, updateBoardName, allBoardsAtom } from "./Atoms";
+import { AddBoardButton } from "./AddBoardButton";
 
-interface PlayerDataProps {
-    data: Player[];
-}
-
-export function Actions({ data }: PlayerDataProps) {
+export function Actions() {
     const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-    const [openBoardModal, setOpenBoardModal] = useState<boolean>(false);
+    const board = useAtomValue(getCurrentBoard);
+    const allBoards = useAtomValue(allBoardsAtom);
+    const updatename = useSetAtom(updateBoardName);
+
+    const onNameChange = (e: any) => {
+        const newName = e.target.value;
+        updatename({ ...board, NewName: newName });
+    };
 
     return (
         <>
@@ -34,34 +38,42 @@ export function Actions({ data }: PlayerDataProps) {
             >
                 <TextField
                     id="board-name"
-                    label="Board Name"
+                    label="Draft Board"
                     variant="outlined"
-                    value="Unnamed Board"
+                    value={board.Name}
+                    onChange={onNameChange}
                 />
                 <FormControl>
-                    <InputLabel id="demo-simple-select-label">Board</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Draft Boards</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={2}
-                        label="Board"
+                        value={board.Name}
+                        label="Draft Boards"
                         onChange={() => {}}
                     >
-                        <MenuItem value={1}>Redraft</MenuItem>
-                        <MenuItem value={2}>Dynasty</MenuItem>
-                        <MenuItem value={3}>2025 Rookie</MenuItem>
+                        {allBoards.map(({ Name }) => (
+                            <MenuItem key={Name} value={Name}>
+                                {Name}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
-                <Button variant="outlined" size="large" onClick={() => setOpenBoardModal(true)}>
-                    Add Board
-                </Button>
-                <IconButton aria-label="delete" onClick={() => setOpenDeleteModal(true)}>
+                <AddBoardButton />
+                <IconButton
+                    aria-label="delete"
+                    onClick={() => setOpenDeleteModal(true)}
+                >
                     <DeleteIcon />
                 </IconButton>
             </div>
-            <Filters data={data} />
-            <DeleteModal open={openDeleteModal} onClose={() => {setOpenDeleteModal(false)}}/>
-            <CreateBoardModal open={openBoardModal} onClose={() => {setOpenBoardModal(false)}}/>
+            <Filters />
+            <DeleteModal
+                open={openDeleteModal}
+                onClose={() => {
+                    setOpenDeleteModal(false);
+                }}
+            />
         </>
     );
 }

@@ -1,7 +1,7 @@
 import { Board } from "./Types";
 
 export const initialBoard = {
-    Name: '', 
+    Name: 'Unnamed Board', 
     Filters: {
         QB: true,
         RB: true,
