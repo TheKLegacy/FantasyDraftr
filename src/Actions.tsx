@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import { Filters } from "./Filters";
 import DeleteModal from "./DeleteModal";
 import { useAtomValue, useSetAtom } from "jotai";
-import { getCurrentBoard, updateBoardName, allBoardsAtom } from "./Atoms";
+import { currentBoardAtom, getCurrentBoard, updateBoardName, allBoardsAtom } from "./Atoms";
 import { AddBoardButton } from "./AddBoardButton";
 
 export function Actions() {
@@ -19,6 +19,7 @@ export function Actions() {
     const board = useAtomValue(getCurrentBoard);
     const allBoards = useAtomValue(allBoardsAtom);
     const updatename = useSetAtom(updateBoardName);
+    const setCurrentBoard = useSetAtom(currentBoardAtom);
 
     const onNameChange = (e: any) => {
         const newName = e.target.value;
@@ -53,7 +54,7 @@ export function Actions() {
                         onChange={() => {}}
                     >
                         {allBoards.map(({ Name }) => (
-                            <MenuItem key={Name} value={Name}>
+                            <MenuItem key={Name} value={Name} onClick={() => setCurrentBoard(Name)}>
                                 {Name}
                             </MenuItem>
                         ))}

@@ -7,11 +7,12 @@ import {
     DialogContentText,
     DialogTitle,
 } from "@mui/material";
+import { deleteCurrentBoard } from "./Atoms";
+import { useSetAtom } from "jotai";
 
 type DeleteModalProps = {
     open: boolean;
-    onClose?: () => void;
-    onConfirm?: () => void;
+    onClose: () => void;
     title?: string;
     description?: string;
 };
@@ -19,10 +20,16 @@ type DeleteModalProps = {
 const DeleteModal: React.FC<DeleteModalProps> = ({
     open,
     onClose,
-    onConfirm,
     title = "Confirm Deletion",
     description = "Are you sure you want to delete this item? This action cannot be undone.",
 }) => {
+    const deleteBoard = useSetAtom(deleteCurrentBoard);
+
+    const onDelete = () => {
+        deleteBoard();
+        onClose();
+    }
+
     return (
         <Dialog
             open={open}
@@ -37,7 +44,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
                 <Button onClick={onClose} color="secondary">
                     Cancel
                 </Button>
-                <Button onClick={onConfirm} color="error" variant="contained">
+                <Button onClick={onDelete} color="error" variant="contained">
                     Delete
                 </Button>
             </DialogActions>

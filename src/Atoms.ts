@@ -20,7 +20,6 @@ export const updateBoard = atom(null, (get, set, payload: Board) => {
 });
 
 export const updateBoardName = atom(null, (get, set, payload: Board & {NewName: string}) => {
-    console.log("payload", payload)
     const allBoards = get(allBoardsAtom);
     const updatedBoards = allBoards.map((board) =>
         board.Name === payload.Name ? { ...payload, Name: payload.NewName, NewName: undefined } as Board : board
@@ -28,6 +27,14 @@ export const updateBoardName = atom(null, (get, set, payload: Board & {NewName: 
 
     set(currentBoardAtom, payload.NewName);
     set(allBoardsAtom, updatedBoards);
+});
+
+export const deleteCurrentBoard = atom(null, (get, set) => {
+    const allBoards = get(allBoardsAtom);
+    const currentBoard = get(currentBoardAtom);
+    const updatedBoards = allBoards.filter((board) => board.Name !== currentBoard);
+    set(allBoardsAtom, updatedBoards);
+    set(currentBoardAtom, updatedBoards[0]?.Name ?? "");
 });
 
 export const currentFiltersAtom = atom((get) => get(getCurrentBoard).Filters);

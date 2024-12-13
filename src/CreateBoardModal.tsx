@@ -8,7 +8,7 @@ import {
   TextField,
 } from '@mui/material';
 import { useAtom } from "jotai";
-import { allBoardsAtom, cleanedPlayersAtom } from "./Atoms";
+import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom } from "./Atoms";
 import { initialBoard } from './InitialData';
 
 type DraftBoardDialogProps = {
@@ -18,17 +18,19 @@ type DraftBoardDialogProps = {
 
 const CreateBoardModal: React.FC<DraftBoardDialogProps> = ({ open, onClose }) => {
   const [boards, setBoards] = useAtom(allBoardsAtom);
-  const [cleanedPlayers] = useAtom(cleanedPlayersAtom)
+  const [cleanedPlayers] = useAtom(cleanedPlayersAtom);
+  const [_, setCurrentBoard] = useAtom(currentBoardAtom);
   const [newBoardName, setNewBoardName] = useState<string>('');
 
   const handleCreate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setBoards([...boards, {...initialBoard, Name:newBoardName, Players: cleanedPlayers}])
-    setNewBoardName('')
+    setBoards([...boards, {...initialBoard, Name:newBoardName, Players: cleanedPlayers}]);
+    setCurrentBoard(newBoardName);
+    setNewBoardName('');
     onClose();
   };
 
   const handleCancel = () => {
-    setNewBoardName('')
+    setNewBoardName('');
     onClose();
   };
 

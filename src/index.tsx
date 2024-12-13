@@ -95,7 +95,6 @@ const App: React.FC = () => {
         const existingBoards =
             JSON.parse(localStorage.getItem("DraftBoards") ?? "null") ??
             initialBoards;
-        console.log("existingBoards", existingBoards);
         setBoards(existingBoards);
         setCurrentBoard(existingBoards[0].Name);
     }, []);
