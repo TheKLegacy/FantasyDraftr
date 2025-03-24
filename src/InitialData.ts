@@ -1,4 +1,4 @@
-import { Board } from "./Types";
+import type { Board } from "./Types";
 
 export const initialBoard = {
     Name: 'Unnamed Board', 
@@ -9,6 +9,7 @@ export const initialBoard = {
         TE: true,
         K: true,
         DEF: true,
+        "Rookies Only": false,
         RookiePicks: true,
         IDP: true,
         DL: true,
