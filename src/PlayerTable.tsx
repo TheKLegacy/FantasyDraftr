@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { ColDef, ValueGetterParams, RowDragEvent, GridApi } from "ag-grid-community";
+import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
 import { useAtomValue, useSetAtom } from 'jotai';
 import { filteredPlayersAtom, getCurrentBoard, updateBoard, currentPlayersAtom } from "./Atoms";
 
@@ -18,33 +18,48 @@ export function PlayerTable() {
         };
     }, []);
 
-    const [columnDefs] = useState<ColDef<PlayerRaw>[]>([
+    const PlayerNameCellRenderer = (props: any) => {
+        const { data } = props;
+        const imageUrl = `https://sleepercdn.com/content/nfl/players/thumb/${data?.player_id}.jpg`;
+        return (
+            <div>
+                <span style={{minWidth: "50px", display:"inline-block"}}>
+                    <img 
+                        style={{ height: '32px', width: 'auto', flex: "0 0 32px;"}} 
+                        src={imageUrl} 
+                    /> 
+                </span>
+                {data?.full_name}
+            </div>
+        );
+    };
+
+    const [columnDefs] = useState<ColDef<Player>[]>([
         {
             headerName: "Rank",
-            valueGetter: (params: ValueGetterParams<PlayerRaw>) =>
+            valueGetter: (params: ValueGetterParams<Player>) =>
                 params.data?.rank,
             width: 80
         },
         {
             headerName: "Pos",
-            valueGetter: (params: ValueGetterParams<PlayerRaw>) =>
+            valueGetter: (params: ValueGetterParams<Player>) =>
                 params.data?.position,
             width: 80
         },
         {
             headerName: "Name",
-            valueGetter: (params: ValueGetterParams<PlayerRaw>) =>
-                params.data?.full_name,
+            cellRenderer: PlayerNameCellRenderer
         },
         {
             headerName: "Age",
-            valueGetter: (params: ValueGetterParams<PlayerRaw>) =>
+            valueGetter: (params: ValueGetterParams<Player>) =>
                 params.data?.age,
             width: 80
         },
         {
             headerName: "Team",
-            valueGetter: (params: ValueGetterParams<PlayerRaw>) =>
+            valueGetter: (params: ValueGetterParams<Player>) =>
                 params.data?.team ?? "FA",
             width: 80
         },
@@ -86,7 +101,7 @@ export function PlayerTable() {
         >
             <div
                 className="ag-theme-alpine-dark"
-                style={{ height: 500, width: "90%", margin: "2em" }}
+                style={{ height: "75vh", width: "80%", margin: "2em" }}
             >
                 <AgGridReact
                     rowData={rowData.slice(0, 500)}

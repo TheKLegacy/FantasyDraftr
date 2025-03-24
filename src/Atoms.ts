@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { Board, FilterValues } from './Types'
+import type { Board, FilterValues } from './Types'
 import { initialBoard } from './InitialData'
 import { atomWithStorage } from 'jotai/utils'
 
@@ -47,18 +47,19 @@ export const filteredPlayersAtom = atom((get) => {
 
     const filterPlayers = (players: Player[], filters: FilterValues): Player[] => {
         return players.filter(player => {
-            // Check if the player's type matches the filter
-            if (filters[player.position]) return true;
-    
-            // Special case: IDP is a combination of DL, LB, and DB
-            if (
-                filters.IDP &&
-                (player.position === "DL" || player.position === "LB" || player.position === "DB")
-            ) {
-                return true;
+            const positionMatches = filters[player.position];
+            const idpFilterMatchs = filters.IDP &&
+                (player.position === "DL" || player.position === "LB" || player.position === "DB");
+            
+            if(filters["Rookies Only"] && player.years_exp !== 0){
+                return false
+            }
+
+            if(positionMatches || idpFilterMatchs){
+                return true
             }
     
-            return false; // Otherwise, exclude the player
+            return false;
         });
     };
 

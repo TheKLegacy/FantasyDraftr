@@ -6,11 +6,12 @@ export type FilterValues = {
     K: boolean;
     DEF: boolean;
     RookiePicks: boolean;
+    "Rookies Only": boolean
     IDP: boolean;
     DL: boolean;
     LB: boolean;
     DB: boolean;
-    [key: string]: any;
+    [key: string]: boolean;
 };
 
 export type Board = {

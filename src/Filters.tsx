@@ -7,6 +7,7 @@ export function Filters() {
     const filters = useAtomValue(currentFiltersAtom);
     const board = useAtomValue(getCurrentBoard);
     const setBoard = useSetAtom(updateBoard);
+    const filterProps = ["QB", "RB", "WR", "TE", "K", "Rookies Only", "DEF", "IDP", "DL", "LB", "DB"] as const;
 
     const updateFilter = (
         event: ChangeEvent<HTMLInputElement>,
@@ -30,97 +31,18 @@ export function Filters() {
             alignItems="center"
             sx={{ width: "100%" }}
         >
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={filters.QB}
-                        onChange={(e) => updateFilter(e, "QB")}
-                    />
-                }
-                label="QB"
-            />
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={filters.RB}
-                        onChange={(e) => updateFilter(e, "RB")}
-                    />
-                }
-                label="RB"
-            />
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={filters.WR}
-                        onChange={(e) => updateFilter(e, "WR")}
-                    />
-                }
-                label="WR"
-            />
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={filters.TE}
-                        onChange={(e) => updateFilter(e, "TE")}
-                    />
-                }
-                label="TE"
-            />
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={filters.K}
-                        onChange={(e) => updateFilter(e, "K")}
-                    />
-                }
-                label="K"
-            />
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={filters.DEF}
-                        onChange={(e) => updateFilter(e, "DEF")}
-                    />
-                }
-                label="DEF"
-            />
-            {/* <FormControlLabel control={<Switch value={filters.QB}/>} label="Rookie Picks" /> */}
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={filters.IDP}
-                        onChange={(e) => updateFilter(e, "IDP")}
-                    />
-                }
-                label="IDP"
-            />
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={filters.DL}
-                        onChange={(e) => updateFilter(e, "DL")}
-                    />
-                }
-                label="DL"
-            />
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={filters.LB}
-                        onChange={(e) => updateFilter(e, "LB")}
-                    />
-                }
-                label="LB"
-            />
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={filters.DB}
-                        onChange={(e) => updateFilter(e, "DB")}
-                    />
-                }
-                label="DB"
-            />
+            {filterProps.map(filterProp => (
+                <FormControlLabel
+                    key={filterProp}
+                    control={
+                        <Switch
+                            checked={filters[filterProp]}
+                            onChange={(e) => updateFilter(e, filterProp)}
+                        />
+                    }
+                    label={filterProp}
+                />
+            ))}
         </Box>
     );
 }
