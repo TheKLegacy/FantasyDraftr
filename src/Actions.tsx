@@ -71,9 +71,7 @@ export function Actions() {
             <Filters />
             <DeleteModal
                 open={openDeleteModal}
-                onClose={() => {
-                    setOpenDeleteModal(false);
-                }}
+                onClose={() => setOpenDeleteModal(false)}
             />
         </>
     );

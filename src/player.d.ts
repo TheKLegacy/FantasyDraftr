@@ -19,6 +19,7 @@ type Player = {
     fantasy_positions: string[];
     team: string | null;
     rank: number | null;
+    posRank: number | null;
     [key: string]: any;
 };
 
