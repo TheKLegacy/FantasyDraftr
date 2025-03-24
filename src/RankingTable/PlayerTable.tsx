@@ -1,10 +1,12 @@
-import React, { useMemo, useState } from "react";
+import React, { SyntheticEvent, useMemo, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
 import { useAtomValue, useSetAtom } from 'jotai';
-import { filteredPlayersAtom, getCurrentBoard, updateBoard, currentPlayersAtom } from "./Atoms";
+import { filteredPlayersAtom, getCurrentBoard, updateBoard, currentPlayersAtom } from "../Atoms";
+import { PlayerNameCellRenderer } from "./PlayerNameCellRenderer";
+import { Actions } from "./Actions";
 
 export function PlayerTable() {
     const rowData = useAtomValue(filteredPlayersAtom);
@@ -12,34 +14,25 @@ export function PlayerTable() {
     const board = useAtomValue(getCurrentBoard);
     const setBoard = useSetAtom(updateBoard);
 
-    const defaultColDef = useMemo(() => {
-        return {
-            sortable: false,
-        };
-    }, []);
-
-    const PlayerNameCellRenderer = (props: any) => {
-        const { data } = props;
-        const imageUrl = `https://sleepercdn.com/content/nfl/players/thumb/${data?.player_id}.jpg`;
-        return (
-            <div>
-                <span style={{minWidth: "50px", display:"inline-block"}}>
-                    <img 
-                        style={{ height: '32px', width: 'auto', flex: "0 0 32px;"}} 
-                        src={imageUrl} 
-                    /> 
-                </span>
-                {data?.full_name}
-            </div>
-        );
-    };
+    const defaultColDef = useMemo(() => { return { sortable: false, }; }, []);    
 
     const [columnDefs] = useState<ColDef<Player>[]>([
+        {
+            headerName: "#",
+            valueGetter: "node.rowIndex + 1",
+            width: 70
+        },
         {
             headerName: "Rank",
             valueGetter: (params: ValueGetterParams<Player>) =>
                 params.data?.rank,
-            width: 80
+            width: 70
+        },
+        {
+            headerName: "Pos #",
+            valueGetter: (params: ValueGetterParams<Player>) =>
+                params.data?.posRank,
+            width: 70
         },
         {
             headerName: "Pos",
@@ -63,6 +56,16 @@ export function PlayerTable() {
                 params.data?.team ?? "FA",
             width: 80
         },
+        {
+            headerName: "College",
+            valueGetter: (params: ValueGetterParams<Player>) =>
+                params.data?.college,
+            width: 160
+        },
+        {
+            headerName: "Actions",
+            cellRenderer: Actions
+        }
     ]);
 
     const onRowDragEnd = (event: RowDragEvent) => {
@@ -101,7 +104,7 @@ export function PlayerTable() {
         >
             <div
                 className="ag-theme-alpine-dark"
-                style={{ height: "75vh", width: "80%", margin: "2em" }}
+                style={{ height: "75vh", width: "1080px", margin: "2em" }}
             >
                 <AgGridReact
                     rowData={rowData.slice(0, 500)}

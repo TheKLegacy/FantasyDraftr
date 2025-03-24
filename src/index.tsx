@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import playerData from "../data/players.json";
-import { PlayerTable } from "./PlayerTable";
+import { PlayerTable } from "./RankingTable/PlayerTable";
 import { Actions } from "./Actions";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";

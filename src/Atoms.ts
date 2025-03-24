@@ -46,17 +46,42 @@ export const filteredPlayersAtom = atom((get) => {
     const filters = get(currentFiltersAtom);
 
     const filterPlayers = (players: Player[], filters: FilterValues): Player[] => {
+        let qbRanking = 0, rbRanking = 0, wrRanking = 0, teRanking = 0, dlRanking = 0, lbRanking = 0, dbRanking = 0;
         return players.filter(player => {
+            
             const positionMatches = filters[player.position];
             const idpFilterMatchs = filters.IDP &&
                 (player.position === "DL" || player.position === "LB" || player.position === "DB");
             
             if(filters["Rookies Only"] && player.years_exp !== 0){
-                return false
+                return false;
             }
 
             if(positionMatches || idpFilterMatchs){
-                return true
+                switch(player.position.toUpperCase()) {
+                    case "QB":
+                        player.posRank = ++qbRanking;
+                        break;
+                    case "RB":
+                        player.posRank = ++rbRanking;
+                        break;
+                    case "WR":
+                        player.posRank = ++wrRanking;
+                        break;
+                    case "TE":
+                        player.posRank = ++teRanking;
+                        break;
+                    case "DL":
+                        player.posRank = ++dlRanking;
+                        break;
+                    case "LB":
+                        player.posRank = ++lbRanking;
+                        break;
+                    case "DB":
+                        player.posRank = ++dbRanking;
+                        break;
+                }
+                return true;
             }
     
             return false;
