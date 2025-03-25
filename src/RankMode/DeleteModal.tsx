@@ -7,7 +7,7 @@ import {
     DialogContentText,
     DialogTitle,
 } from "@mui/material";
-import { deleteCurrentBoard } from "./Atoms";
+import { deleteCurrentBoard } from "../Atoms";
 import { useSetAtom } from "jotai";
 
 type DeleteModalProps = {

@@ -3,7 +3,7 @@ import React, { ChangeEvent } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { currentFiltersAtom, getCurrentBoard, updateBoard } from "./Atoms";
 
-export function Filters() {
+export const Filters: React.FC = () => {
     const filters = useAtomValue(currentFiltersAtom);
     const board = useAtomValue(getCurrentBoard);
     const setBoard = useSetAtom(updateBoard);

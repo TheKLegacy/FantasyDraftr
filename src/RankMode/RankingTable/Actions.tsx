@@ -4,7 +4,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 import React from "react";
 import { Tooltip, IconButton } from '@mui/material';
-import { currentPlayersAtom, getCurrentBoard, updateBoard } from '../Atoms';
+import { currentPlayersAtom, getCurrentBoard, updateBoard } from '../../Atoms';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 export const Actions = (props: {data: Player}) => {

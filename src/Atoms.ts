@@ -1,9 +1,14 @@
 import { atom } from 'jotai'
-import type { Board, FilterValues } from './Types'
 import { initialBoard } from './InitialData'
 import { atomWithStorage } from 'jotai/utils'
 
 export const currentBoardAtom = atom<String>("Unnamed Board");
+
+export const displayMode = atom<"rank" | "draft" | "livedraft">("rank");
+
+export const draftBoard = atom<Board>({...initialBoard })
+
+export const draftedBoard = atom<DraftedBoard>({Players: [], Pick: 0})
 
 export const getCurrentBoard = atom((get) => {
     const name = get(currentBoardAtom);
@@ -44,52 +49,54 @@ export const currentPlayersAtom = atom((get) => get(getCurrentBoard).Players);
 export const filteredPlayersAtom = atom((get) => { 
     const players = get(currentPlayersAtom);
     const filters = get(currentFiltersAtom);
-
-    const filterPlayers = (players: Player[], filters: FilterValues): Player[] => {
-        let qbRanking = 0, rbRanking = 0, wrRanking = 0, teRanking = 0, dlRanking = 0, lbRanking = 0, dbRanking = 0;
-        return players.filter(player => {
-            
-            const positionMatches = filters[player.position];
-            const idpFilterMatchs = filters.IDP &&
-                (player.position === "DL" || player.position === "LB" || player.position === "DB");
-            
-            if(filters["Rookies Only"] && player.years_exp !== 0){
-                return false;
-            }
-
-            if(positionMatches || idpFilterMatchs){
-                switch(player.position.toUpperCase()) {
-                    case "QB":
-                        player.posRank = ++qbRanking;
-                        break;
-                    case "RB":
-                        player.posRank = ++rbRanking;
-                        break;
-                    case "WR":
-                        player.posRank = ++wrRanking;
-                        break;
-                    case "TE":
-                        player.posRank = ++teRanking;
-                        break;
-                    case "DL":
-                        player.posRank = ++dlRanking;
-                        break;
-                    case "LB":
-                        player.posRank = ++lbRanking;
-                        break;
-                    case "DB":
-                        player.posRank = ++dbRanking;
-                        break;
-                }
-                return true;
-            }
-    
-            return false;
-        });
-    };
-
     return filterPlayers(players, filters);
 });
+
+export const filteredDraftBoardPlayersAtom = atom((get) => { 
+    const {Players, Filters} = get(draftBoard);
+    return filterPlayers(Players, Filters);
+});
+
+const filterPlayers = (players: Player[], filters: FilterValues): Player[] => {
+    let qbRanking = 0, rbRanking = 0, wrRanking = 0, teRanking = 0, dlRanking = 0, lbRanking = 0, dbRanking = 0;
+    return players.filter(player => {
+        const positionMatches = filters[player.position];
+        const idpFilterMatchs = filters.IDP &&
+            (player.position === "DL" || player.position === "LB" || player.position === "DB");
+        
+        if(filters["Rookies Only"] && player.years_exp !== 0){
+            return false;
+        }
+
+        if(positionMatches || idpFilterMatchs){
+            switch(player.position.toUpperCase()) {
+                case "QB":
+                    player.posRank = ++qbRanking;
+                    break;
+                case "RB":
+                    player.posRank = ++rbRanking;
+                    break;
+                case "WR":
+                    player.posRank = ++wrRanking;
+                    break;
+                case "TE":
+                    player.posRank = ++teRanking;
+                    break;
+                case "DL":
+                    player.posRank = ++dlRanking;
+                    break;
+                case "LB":
+                    player.posRank = ++lbRanking;
+                    break;
+                case "DB":
+                    player.posRank = ++dbRanking;
+                    break;
+            }
+            return true;
+        }
+        return false;
+    });
+}
 
 export const allBoardsAtom = atomWithStorage<Board[]>("DraftBoards", [initialBoard]);
 

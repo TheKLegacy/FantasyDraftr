@@ -24,3 +24,5 @@ type Player = {
 };
 
 type FilteredPlayers = Player[];
+
+type PlayerDrafted = Player & { Pick : Number };

@@ -2,16 +2,16 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import playerData from "../data/players.json";
-import { PlayerTable } from "./RankingTable/PlayerTable";
-import { Actions } from "./Actions";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { useSetAtom } from "jotai";
-import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom } from "./Atoms";
+import { useAtomValue, useSetAtom } from "jotai";
+import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom, displayMode } from "./Atoms";
 import { initialBoard } from "./InitialData";
 import type { Board } from "./Types";
+import { DraftModeContainer } from "./DraftMode/DraftModeContaier";
+import { RankModeContainer } from "./RankMode/RankModeContainer";
 
 // Create a dark theme
 const darkTheme = createTheme({
@@ -24,6 +24,7 @@ const App: React.FC = () => {
     const setBoards = useSetAtom(allBoardsAtom);
     const setCurrentBoard = useSetAtom(currentBoardAtom);
     const setCleanedPlayers = useSetAtom(cleanedPlayersAtom);
+    const display = useAtomValue(displayMode);
 
     useEffect(() => {
         const localStorageData = localStorage.getItem("DraftBoards");
@@ -54,8 +55,18 @@ const App: React.FC = () => {
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
-            <Actions />
-            <PlayerTable />
+            {
+                (() => {
+                    switch (display) {
+                        case "rank":
+                            return <RankModeContainer />;
+                        case "draft":
+                            return <DraftModeContainer />;
+                        default:
+                            return null;
+                    }
+                })()
+            }
         </ThemeProvider>
     );
 };

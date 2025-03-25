@@ -1,4 +1,4 @@
-export type FilterValues = {
+type FilterValues = {
     QB: boolean;
     RB: boolean;
     WR: boolean;
@@ -14,8 +14,13 @@ export type FilterValues = {
     [key: string]: boolean;
 };
 
-export type Board = {
-    Name: string,
-    Filters: FilterValues,
-    Players: Player[]
+type Board = {
+    Name: string;
+    Filters: FilterValues;
+    Players: Player[];
 };
+
+type DraftedBoard = {
+    Players: PlayerDrafted[];
+    Pick: Number;
+}

@@ -1,18 +1,15 @@
-import React, { SyntheticEvent, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
-import { useAtomValue, useSetAtom } from 'jotai';
-import { filteredPlayersAtom, getCurrentBoard, updateBoard, currentPlayersAtom } from "../Atoms";
-import { PlayerNameCellRenderer } from "./PlayerNameCellRenderer";
-import { Actions } from "./Actions";
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { updateBoard, filteredDraftBoardPlayersAtom, draftBoard } from "../Atoms";
+import { PlayerNameCellRenderer } from "../shared/PlayerNameCellRenderer";
 
-export function PlayerTable() {
-    const rowData = useAtomValue(filteredPlayersAtom);
-    const currentPlayers = useAtomValue(currentPlayersAtom);
-    const board = useAtomValue(getCurrentBoard);
-    const setBoard = useSetAtom(updateBoard);
+export const UndraftedTable: React.FC = () => {
+    const rowData = useAtomValue(filteredDraftBoardPlayersAtom);
+    const [board, setBoard] = useAtom(draftBoard);
 
     const defaultColDef = useMemo(() => { return { sortable: false, }; }, []);    
 
@@ -61,16 +58,12 @@ export function PlayerTable() {
             valueGetter: (params: ValueGetterParams<Player>) =>
                 params.data?.college,
             width: 160
-        },
-        {
-            headerName: "Actions",
-            cellRenderer: Actions
         }
     ]);
 
     const onRowDragEnd = (event: RowDragEvent) => {
         const draggedData = event.node.data;
-        const updatedData = [...currentPlayers];
+        const updatedData = [...board.Players];
 
         const draggedIndex = updatedData.findIndex(
             (item) => item.player_id === draggedData.player_id
@@ -93,18 +86,9 @@ export function PlayerTable() {
     };
 
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "8px",
-                margin: "2em",
-            }}
-        >
             <div
                 className="ag-theme-alpine-dark"
-                style={{ height: "75vh", width: "1080px", margin: "2em" }}
+                style={{ height: "75vh", width: "860px", margin: "2em" }}
             >
                 <AgGridReact
                     rowData={rowData.slice(0, 500)}
@@ -120,6 +104,5 @@ export function PlayerTable() {
                     suppressDragLeaveHidesColumns={true}
                 />
             </div>
-        </div>
     );
 }

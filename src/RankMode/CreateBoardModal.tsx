@@ -8,8 +8,8 @@ import {
   TextField,
 } from '@mui/material';
 import { useAtom } from "jotai";
-import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom } from "./Atoms";
-import { initialBoard } from './InitialData';
+import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom } from "../Atoms";
+import { initialBoard } from '../InitialData';
 
 type DraftBoardDialogProps = {
   open: boolean;
