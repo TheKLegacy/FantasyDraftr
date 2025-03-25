@@ -8,13 +8,15 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import React, { useState } from "react";
-import { Filters } from "./Filters";
+import { Filters } from "../Filters";
 import DeleteModal from "./DeleteModal";
 import { useAtomValue, useSetAtom } from "jotai";
-import { currentBoardAtom, getCurrentBoard, updateBoardName, allBoardsAtom } from "./Atoms";
+import { currentBoardAtom, getCurrentBoard, updateBoardName, allBoardsAtom } from "../Atoms";
 import { AddBoardButton } from "./AddBoardButton";
+import { StartDraftButton } from "./StartDraftButton";
+import { LiveDraftButton } from "./LiveDraftButton";
 
-export function Actions() {
+export const Actions: React.FC = () => {
     const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
     const board = useAtomValue(getCurrentBoard);
     const allBoards = useAtomValue(allBoardsAtom);
@@ -61,6 +63,8 @@ export function Actions() {
                     </Select>
                 </FormControl>
                 <AddBoardButton />
+                <StartDraftButton/>
+                <LiveDraftButton/>
                 <IconButton
                     aria-label="delete"
                     onClick={() => setOpenDeleteModal(true)}

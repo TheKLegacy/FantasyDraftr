@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 import CreateBoardModal from "./CreateBoardModal";
 
-export function AddBoardButton() {
+export const AddBoardButton: React.FC = () => {
     const [openBoardModal, setOpenBoardModal] = useState<boolean>(false);
 
     return (
