@@ -9,5 +9,6 @@
       "esModuleInterop": true,
       "resolveJsonModule": true,
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*"],
+    "exclude": ["Data/players.json"]
   }
