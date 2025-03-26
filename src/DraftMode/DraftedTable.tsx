@@ -4,21 +4,21 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
 import { useAtomValue } from 'jotai';
-import { draftedBoard } from "../Atoms";
+import { draftedBoard, teams } from "../Atoms";
 import { PlayerNameCellRenderer } from "../shared/PlayerNameCellRenderer";
+import { formattedPick } from "../shared/utils";
 
 export const DraftedTable: React.FC = () => {
     const rowData = useAtomValue(draftedBoard).Players;
-
+    const numTeams = useAtomValue(teams);
+    console.log(numTeams);
     const defaultColDef = useMemo(() => { return { sortable: false, }; }, []);    
 
-    const [columnDefs] = useState<ColDef<PlayerDrafted>[]>([
+    const columnDefs = useMemo<ColDef<PlayerDrafted>[]>(() => [
         {
             headerName: "Pick",
-            valueGetter: (params: ValueGetterParams<PlayerDrafted>) => {
-                const pick = params.data?.Pick ?? 0;
-                return `${Math.floor((pick - 1) / 12) + 1}.${((pick - 1) % 12) + 1}`
-            },
+            valueGetter: (params: ValueGetterParams<PlayerDrafted>) => 
+                formattedPick(params.data?.Pick ?? 0, numTeams),
             width: 70
         },
         {
@@ -31,7 +31,7 @@ export const DraftedTable: React.FC = () => {
             headerName: "Name",
             cellRenderer: PlayerNameCellRenderer
         },
-    ]);
+    ], [numTeams]);
 
     return (
         <div

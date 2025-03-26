@@ -3,6 +3,7 @@ import { EndDraftButton } from "../shared/EndDraftButton";
 import { Filters } from "../Filters";
 import { DraftedTable } from "./DraftedTable";
 import { UndraftedTable } from "./UndraftedTable";
+import { TeamCount } from "../shared/TeamCount";
 
 export const DraftModeContainer: React.FC = () => {
     return (<>
@@ -14,6 +15,7 @@ export const DraftModeContainer: React.FC = () => {
             margin: "2em",
         }}>
             <EndDraftButton/>
+            <TeamCount/>
         </div>
         <Filters />
         <div
