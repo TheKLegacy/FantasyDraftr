@@ -22,5 +22,5 @@ type Board = {
 
 type DraftedBoard = {
     Players: PlayerDrafted[];
-    Pick: Number;
+    Pick: number;
 }

@@ -68,28 +68,23 @@ export const PlayerTable: React.FC = () => {
         }
     ]);
 
-    const onRowDragEnd = (event: RowDragEvent) => {
-        const draggedData = event.node.data;
-        const updatedData = [...currentPlayers];
+    const onRowDragEnd = (event: RowDragEvent<Player>) => {
+        const nodes = event.nodes;
+        const draggedData = nodes.map(node => node.data);
+        let updatedData = [...currentPlayers];
 
-        const draggedIndex = updatedData.findIndex(
-            (item) => item.player_id === draggedData.player_id
+        const newIndex = updatedData.findIndex(
+            (p) => p.player_id === rowData[event.overIndex].player_id
         );
 
-        if (draggedIndex !== -1) {
-            const newIndex = updatedData.findIndex(
-                (p) => p.player_id === rowData[event.overIndex].player_id
-            );
+        draggedData.forEach(p => updatedData = updatedData.filter(p2 => p?.player_id !== p2.player_id));
+        updatedData.splice(newIndex, 0, ...draggedData);
 
-            updatedData.splice(draggedIndex, 1);
-            updatedData.splice(newIndex, 0, draggedData);
-
-            updatedData.forEach((player, index) => {
-                player.rank = index + 1;
-            });
-
-            setBoard({ ...board, Players: updatedData });
-        }
+        updatedData.forEach((player, index) => {
+            player.rank = index + 1;
+        }); 
+        
+        setBoard({ ...board, Players: updatedData });
     };
 
     return (

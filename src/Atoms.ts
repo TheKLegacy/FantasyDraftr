@@ -6,9 +6,18 @@ export const currentBoardAtom = atom<String>("Unnamed Board");
 
 export const displayMode = atom<"rank" | "draft" | "livedraft">("rank");
 
-export const draftBoard = atom<Board>({...initialBoard })
+export const draftBoard = atom<Board | undefined>(undefined);
 
-export const draftedBoard = atom<DraftedBoard>({Players: [], Pick: 0})
+export const draftedBoard = atom<DraftedBoard>({Players: [], Pick: 0});
+
+export const draftPlayer = atom(null, (get, set, payload: Player) => {
+    let board = get(draftBoard);
+    let draftedPlayersBoard = get(draftedBoard);
+    const updatedPlayers = board!.Players.filter(p => p.player_id !== payload.player_id);
+    const updatedDraftedPlayers = [...draftedPlayersBoard.Players, { ...payload, Pick: draftedPlayersBoard.Pick + 1 }];
+    set(draftBoard, { ...board!, Players: updatedPlayers });
+    set(draftedBoard, { Players: updatedDraftedPlayers, Pick: draftedPlayersBoard.Pick + 1 });
+})
 
 export const getCurrentBoard = atom((get) => {
     const name = get(currentBoardAtom);
@@ -53,7 +62,7 @@ export const filteredPlayersAtom = atom((get) => {
 });
 
 export const filteredDraftBoardPlayersAtom = atom((get) => { 
-    const {Players, Filters} = get(draftBoard);
+    const {Players, Filters} = get(draftBoard)!;
     return filterPlayers(Players, Filters);
 });
 
