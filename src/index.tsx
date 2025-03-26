@@ -9,7 +9,6 @@ import "@fontsource/roboto/700.css";
 import { useAtomValue, useSetAtom } from "jotai";
 import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom, displayMode } from "./Atoms";
 import { initialBoard } from "./InitialData";
-import type { Board } from "./Types";
 import { DraftModeContainer } from "./DraftMode/DraftModeContaier";
 import { RankModeContainer } from "./RankMode/RankModeContainer";
 
