@@ -10,6 +10,8 @@ export const draftBoard = atom<Board | undefined>(undefined);
 
 export const draftedBoard = atom<DraftedBoard>({Players: [], Pick: 0});
 
+export const teams = atom<number>(12);
+
 export const draftPlayer = atom(null, (get, set, payload: Player) => {
     let board = get(draftBoard);
     let draftedPlayersBoard = get(draftedBoard);
