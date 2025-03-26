@@ -10,9 +10,9 @@ npm run start
 
 Todo:
 - Fix bug which requires you to change a toggle or create a new list on initial lode. 
-- Add sleeper integrated draft (if possible)
+- Add sleeper integrated draft board
 - Fix actions move buttons with filtered out players
-- Add some confirm models
+- Add some confirm modals
 - Add users to draft mode
 - Add accounts
 - Host online
