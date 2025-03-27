@@ -6,6 +6,8 @@ export const currentBoardAtom = atom<String>("Unnamed Board");
 
 export const displayMode = atom<"rank" | "draft" | "livedraft">("rank");
 
+export const remainingPlayers = atom<Board | undefined>(undefined);
+
 export const draftBoard = atom<Board | undefined>(undefined);
 
 export const draftedBoard = atom<DraftedBoard>({Players: [], Pick: 0});

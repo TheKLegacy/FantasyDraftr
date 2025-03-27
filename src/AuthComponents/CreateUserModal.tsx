@@ -107,8 +107,6 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ open, onClose }) => {
           onChange={(e) => setEmail(e.target.value)}
           error={!!error && !email.trim()}
         />
-      </DialogContent>
-      <DialogContent>
         <TextField
           margin="dense"
           label="Password"
@@ -124,8 +122,6 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ open, onClose }) => {
           error={!!error && password.length < 6}
           helperText={error && password.length < 6 ? 'Password must be at least 6 characters' : ''}
         />
-      </DialogContent>
-      <DialogContent>
         <TextField
           margin="dense"
           label="Confirm Password"
