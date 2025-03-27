@@ -1,6 +1,11 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { displayMode, draftBoard, draftedBoard, getCurrentBoard } from "../Atoms";
+import {
+    displayMode,
+    draftBoard,
+    draftedBoard,
+    getCurrentBoard,
+} from "../Atoms";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 export const StartDraftButton: React.FC = () => {
@@ -11,9 +16,17 @@ export const StartDraftButton: React.FC = () => {
 
     return (
         <>
-            <Button variant="outlined" size="large" onClick={() => (setDisplayMode("draft"),  setDraftBoardAtom(currentBoard), setdraftedBoardAtom({Players: [], Pick: 0}))}>
+            <Button
+                variant="outlined"
+                size="large"
+                onClick={() => (
+                    setDisplayMode("draft"),
+                    setDraftBoardAtom(currentBoard),
+                    setdraftedBoardAtom({ Players: [], Pick: 0 })
+                )}
+            >
                 Start Draft
             </Button>
         </>
     );
-}
+};

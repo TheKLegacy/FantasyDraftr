@@ -7,7 +7,19 @@ export const Filters: React.FC = () => {
     const filters = useAtomValue(currentFiltersAtom);
     const board = useAtomValue(getCurrentBoard);
     const setBoard = useSetAtom(updateBoard);
-    const filterProps = ["QB", "RB", "WR", "TE", "K", "Rookies Only", "DEF", "IDP", "DL", "LB", "DB"] as const;
+    const filterProps = [
+        "QB",
+        "RB",
+        "WR",
+        "TE",
+        "K",
+        "Rookies Only",
+        "DEF",
+        "IDP",
+        "DL",
+        "LB",
+        "DB",
+    ] as const;
 
     const updateFilter = (
         event: ChangeEvent<HTMLInputElement>,
@@ -31,7 +43,7 @@ export const Filters: React.FC = () => {
             alignItems="center"
             sx={{ width: "100%" }}
         >
-            {filterProps.map(filterProp => (
+            {filterProps.map((filterProp) => (
                 <FormControlLabel
                     key={filterProp}
                     control={
@@ -45,4 +57,4 @@ export const Filters: React.FC = () => {
             ))}
         </Box>
     );
-}
+};
