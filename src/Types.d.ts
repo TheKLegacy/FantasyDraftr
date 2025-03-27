@@ -6,7 +6,7 @@ type FilterValues = {
     K: boolean;
     DEF: boolean;
     RookiePicks: boolean;
-    "Rookies Only": boolean
+    "Rookies Only": boolean;
     IDP: boolean;
     DL: boolean;
     LB: boolean;
@@ -23,4 +23,4 @@ type Board = {
 type DraftedBoard = {
     Players: PlayerDrafted[];
     Pick: number;
-}
+};

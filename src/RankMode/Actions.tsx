@@ -11,7 +11,12 @@ import React, { useState } from "react";
 import { Filters } from "../Filters";
 import DeleteModal from "./DeleteModal";
 import { useAtomValue, useSetAtom } from "jotai";
-import { currentBoardAtom, getCurrentBoard, updateBoardName, allBoardsAtom } from "../Atoms";
+import {
+    currentBoardAtom,
+    getCurrentBoard,
+    updateBoardName,
+    allBoardsAtom,
+} from "../Atoms";
 import { AddBoardButton } from "./AddBoardButton";
 import { StartDraftButton } from "./StartDraftButton";
 import { LiveDraftButton } from "./LiveDraftButton";
@@ -47,7 +52,9 @@ export const Actions: React.FC = () => {
                     onChange={onNameChange}
                 />
                 <FormControl>
-                    <InputLabel id="demo-simple-select-label">Draft Boards</InputLabel>
+                    <InputLabel id="demo-simple-select-label">
+                        Draft Boards
+                    </InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
@@ -56,15 +63,19 @@ export const Actions: React.FC = () => {
                         onChange={() => {}}
                     >
                         {allBoards.map(({ Name }) => (
-                            <MenuItem key={Name} value={Name} onClick={() => setCurrentBoard(Name)}>
+                            <MenuItem
+                                key={Name}
+                                value={Name}
+                                onClick={() => setCurrentBoard(Name)}
+                            >
                                 {Name}
                             </MenuItem>
                         ))}
                     </Select>
                 </FormControl>
                 <AddBoardButton />
-                <StartDraftButton/>
-                <LiveDraftButton/>
+                <StartDraftButton />
+                <LiveDraftButton />
                 <IconButton
                     aria-label="delete"
                     onClick={() => setOpenDeleteModal(true)}
@@ -79,4 +90,4 @@ export const Actions: React.FC = () => {
             />
         </>
     );
-}
+};

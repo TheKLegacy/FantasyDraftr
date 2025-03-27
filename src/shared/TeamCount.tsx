@@ -8,9 +8,16 @@ export const TeamCount: React.FC = () => {
 
     return (
         <>
-            <TextField type="number" id="outlined-basic" label="Number of Teams" variant="outlined" value={numTeams} onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setNumTeams(parseInt(event.target.value));
-            }}/>
+            <TextField
+                type="number"
+                id="outlined-basic"
+                label="Number of Teams"
+                variant="outlined"
+                value={numTeams}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setNumTeams(parseInt(event.target.value));
+                }}
+            />
         </>
     );
-}
+};

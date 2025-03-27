@@ -10,9 +10,16 @@ export const LiveDraftButton: React.FC = () => {
 
     return (
         <>
-            <Button variant="outlined" size="large" onClick={() => {setDisplayMode("livedraft"); setRemainingPlayers(currentBoard);}}>
+            <Button
+                variant="outlined"
+                size="large"
+                onClick={() => {
+                    setDisplayMode("livedraft");
+                    setRemainingPlayers(currentBoard);
+                }}
+            >
                 Join Sleeper Draft
             </Button>
         </>
     );
-}
+};

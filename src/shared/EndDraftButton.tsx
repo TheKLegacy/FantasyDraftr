@@ -8,9 +8,13 @@ export const EndDraftButton: React.FC = () => {
 
     return (
         <>
-            <Button variant="outlined" size="large" onClick={() => setDisplayMode("rank")}>
+            <Button
+                variant="outlined"
+                size="large"
+                onClick={() => setDisplayMode("rank")}
+            >
                 Leave Draft
             </Button>
         </>
     );
-}
+};
