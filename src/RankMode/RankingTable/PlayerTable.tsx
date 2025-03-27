@@ -90,7 +90,7 @@ export const PlayerTable: React.FC = () => {
                     (p2) => p?.player_id !== p2.player_id
                 ))
         );
-        updatedData.splice(newIndex, 0, ...draggedData);
+        updatedData.splice(newIndex, 0, ...(draggedData as Player[]));
 
         updatedData.forEach((player, index) => {
             player.rank = index + 1;
