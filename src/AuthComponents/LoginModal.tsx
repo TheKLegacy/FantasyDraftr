@@ -82,9 +82,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
           onChange={(e) => setEmail(e.target.value)}
           error={!!error}
         />
-      </DialogContent>
-      
-      <DialogContent>
         <TextField
           margin="dense"
           label="Password"

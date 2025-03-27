@@ -1,16 +1,16 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { displayMode, draftBoard, getCurrentBoard } from "../Atoms";
+import { displayMode, getCurrentBoard, remainingPlayers } from "../Atoms";
 import { useAtomValue, useSetAtom } from "jotai";
 
 export const LiveDraftButton: React.FC = () => {
     const setDisplayMode = useSetAtom(displayMode);
-    const setDraftBoardAtom = useSetAtom(draftBoard);
+    const setRemainingPlayers = useSetAtom(remainingPlayers);
     const currentBoard = useAtomValue(getCurrentBoard);
 
     return (
         <>
-            <Button variant="outlined" size="large" onClick={() => {setDisplayMode("livedraft"); console.log("currentBoard", currentBoard); setDraftBoardAtom(currentBoard);}}>
+            <Button variant="outlined" size="large" onClick={() => {setDisplayMode("livedraft"); setRemainingPlayers(currentBoard);}}>
                 Join Sleeper Draft
             </Button>
         </>

@@ -12,13 +12,10 @@ import { initialBoard } from "./InitialData";
 import { DraftModeContainer } from "./DraftMode/DraftModeContaier";
 import { RankModeContainer } from "./RankMode/RankModeContainer";
 import ProfileIcon from "./AuthComponents/ProfileIcon";
+import { SleeperDraftContainer } from "./SleeperDraft/SleeperDraftContainer";
 
 // Create a dark theme
-const darkTheme = createTheme({
-    palette: {
-        mode: "dark",
-    },
-});
+const darkTheme = createTheme({palette: {mode: "dark"}});
 
 const App: React.FC = () => {
     const setBoards = useSetAtom(allBoardsAtom);
@@ -28,26 +25,16 @@ const App: React.FC = () => {
 
     useEffect(() => {
         const localStorageData = localStorage.getItem("DraftBoards");
-        const initialBoards = (JSON.parse(
-            localStorageData ?? "null"
-        ) as Board[]) ?? [initialBoard];
+        const initialBoards = (JSON.parse(localStorageData ?? "null" ) as Board[]) ?? [initialBoard];
 
         //TODO: Make a call to my API to get the data
         const filteredPlayers = Object.values(playerData) as unknown as Player[]
 
-        filteredPlayers.forEach((player: Player, index: number) => {
-            player.rank = index + 1;
-        });
+        filteredPlayers.forEach((player: Player, index: number) => { player.rank = index + 1; });
 
-        // const jsonData = JSON.stringify(filteredPlayers);
-        // const file = new Blob([jsonData], { type: "application/json" });
-        // const sizeInMB = file.size / (1024 * 1024);
-        // console.log(`File size: ${sizeInMB.toFixed(2)} MB`);
         initialBoards[0].Players = filteredPlayers;
         setCleanedPlayers(filteredPlayers);
-        const existingBoards =
-            JSON.parse(localStorage.getItem("DraftBoards") ?? "null") ??
-            initialBoards;
+        const existingBoards = JSON.parse(localStorage.getItem("DraftBoards") ?? "null") ?? initialBoards;
         setBoards(existingBoards);
         setCurrentBoard(existingBoards[0].Name);
     }, []);
@@ -63,6 +50,8 @@ const App: React.FC = () => {
                             return <RankModeContainer />;
                         case "draft":
                             return <DraftModeContainer />;
+                        case "livedraft":
+                            return <SleeperDraftContainer />
                         default:
                             return null;
                     }
