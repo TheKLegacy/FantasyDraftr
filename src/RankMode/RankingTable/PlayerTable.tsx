@@ -94,12 +94,12 @@ export const PlayerTable: React.FC = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "8px",
-                margin: "2em",
+                marginTop: "1em",
             }}
         >
             <div
                 className="ag-theme-alpine-dark"
-                style={{ height: "75vh", width: "1080px", margin: "2em" }}
+                style={{ height: "75vh", width: "1080px", marginTop: "1em" }}
             >
                 <AgGridReact
                     rowData={rowData.slice(0, 500)}

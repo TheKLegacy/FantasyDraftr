@@ -11,6 +11,7 @@ import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom, displayMode } from
 import { initialBoard } from "./InitialData";
 import { DraftModeContainer } from "./DraftMode/DraftModeContaier";
 import { RankModeContainer } from "./RankMode/RankModeContainer";
+import ProfileIcon from "./AuthComponents/ProfileIcon";
 
 // Create a dark theme
 const darkTheme = createTheme({
@@ -54,6 +55,7 @@ const App: React.FC = () => {
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
+            <ProfileIcon />
             {
                 (() => {
                     switch (display) {
