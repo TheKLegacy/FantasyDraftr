@@ -6,14 +6,15 @@ import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
     draftPlayer,
-    filteredPlayersAtomNew,
+    filteredPlayersAtom,
     draftBoard,
 } from "../Atoms";
 import { PlayerNameCellRenderer } from "../shared/PlayerNameCellRenderer";
 import { Button } from "@mui/material";
+import type { Player } from "../player";
 
 export const UndraftedTable: React.FC = () => {
-    const rowData = useAtomValue(filteredPlayersAtomNew(draftBoard));
+    const rowData = useAtomValue(filteredPlayersAtom(draftBoard));
     const [board, setBoard] = useAtom(draftBoard);
     const draft = useSetAtom(draftPlayer);
 

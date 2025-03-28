@@ -1,3 +1,5 @@
+import { FilterTypes } from "./Filters";
+
 type Player = {
     player_id: string;
     full_name: string;
@@ -12,7 +14,7 @@ type Player = {
     first_name: string;
     years_exp: number;
     last_name: string;
-    position: string;
+    position: positions;
     weight: string;
     age: number;
     depth_chart_order: number | null;
@@ -22,6 +24,8 @@ type Player = {
     posRank: number | null;
     [key: string]: any;
 };
+
+type positions = Exclude<FilterTypes, "RookiePicks" | "Rookies Only">;
 
 type FilteredPlayers = Player[];
 

@@ -6,6 +6,7 @@ import React from "react";
 import { Tooltip, IconButton } from '@mui/material';
 import { currentPlayersAtom, getCurrentBoard, updateBoard } from '../../Atoms';
 import { useAtomValue, useSetAtom } from 'jotai';
+import type { Player } from '../../player';
 
 export const Actions = (props: {data: Player}) => {
     const currentPlayers = useAtomValue(currentPlayersAtom);
