@@ -66,7 +66,7 @@ async function processData() {
                 });
                 return { ...d,  adpStats: adp };
             })
-            .filter(d => d.adpStats?.adp_dynasty_2qb)
+            .filter(d => d.adpStats?.adp_dynasty_2qb && ["QB","WR","TE","RB"].includes(d.position)) 
             .sort((a, b) => a.adpStats.adp_dynasty_2qb - b.adpStats.adp_dynasty_2qb)
             .slice(0, 1000);
 

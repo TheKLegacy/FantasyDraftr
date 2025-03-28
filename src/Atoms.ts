@@ -1,6 +1,6 @@
-import { atom } from 'jotai'
-import { initialBoard } from './InitialData'
-import { atomWithStorage } from 'jotai/utils'
+import { type Atom, atom } from "jotai";
+import { initialBoard } from "./InitialData";
+import { atomWithStorage } from "jotai/utils";
 
 export const currentBoardAtom = atom<String>("Unnamed Board");
 
@@ -59,16 +59,21 @@ export const currentFiltersAtom = atom((get) => get(getCurrentBoard).Filters);
 
 export const currentPlayersAtom = atom((get) => get(getCurrentBoard).Players);
 
-export const filteredPlayersAtom = atom((get) => { 
-    const players = get(currentPlayersAtom);
-    const filters = get(currentFiltersAtom);
-    return filterPlayers(players, filters);
-});
-
-export const filteredDraftBoardPlayersAtom = atom((get) => { 
-    const {Players, Filters} = get(draftBoard)!;
+export const filteredPlayersAtomNew = (boardAtom: Atom<Board | undefined>) => atom((get) => {
+    const { Players, Filters } = get(boardAtom)!;
     return filterPlayers(Players, Filters);
 });
+
+// export const filteredPlayersAtom = atom((get) => {
+//     const players = get(currentPlayersAtom);
+//     const filters = get(currentFiltersAtom);
+//     return filterPlayers(players, filters);
+// });
+
+// export const filteredDraftBoardPlayersAtom = atom((get) => {
+//     const { Players, Filters } = get(draftBoard)!;
+//     return filterPlayers(Players, Filters);
+// });
 
 const filterPlayers = (players: Player[], filters: FilterValues): Player[] => {
     let qbRanking = 0, rbRanking = 0, wrRanking = 0, teRanking = 0, dlRanking = 0, lbRanking = 0, dbRanking = 0;

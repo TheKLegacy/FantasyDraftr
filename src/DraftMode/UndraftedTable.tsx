@@ -3,13 +3,17 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { draftPlayer, filteredDraftBoardPlayersAtom, draftBoard } from "../Atoms";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import {
+    draftPlayer,
+    filteredPlayersAtomNew,
+    draftBoard,
+} from "../Atoms";
 import { PlayerNameCellRenderer } from "../shared/PlayerNameCellRenderer";
 import { Button } from "@mui/material";
 
 export const UndraftedTable: React.FC = () => {
-    const rowData = useAtomValue(filteredDraftBoardPlayersAtom);
+    const rowData = useAtomValue(filteredPlayersAtomNew(draftBoard));
     const [board, setBoard] = useAtom(draftBoard);
     const draft = useSetAtom(draftPlayer);
 
