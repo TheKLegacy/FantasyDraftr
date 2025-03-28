@@ -1,6 +1,6 @@
 import React from "react";
 import { Actions } from "./Actions";
-import { PlayerTable } from "./RankingTable/PlayerTable";
+import { PlayerTable } from "./PlayerTable";
 
 export const RankModeContainer: React.FC = () => (
 <>
