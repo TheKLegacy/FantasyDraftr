@@ -13,6 +13,8 @@ import { DraftModeContainer } from "./DraftMode/DraftModeContaier";
 import { RankModeContainer } from "./RankMode/RankModeContainer";
 import ProfileIcon from "./AuthComponents/ProfileIcon";
 import { SleeperDraftContainer } from "./SleeperDraft/SleeperDraftContainer";
+import type { Board } from "./Filters";
+import type { Player } from "./player";
 
 // Create a dark theme
 const darkTheme = createTheme({palette: {mode: "dark"}});
@@ -22,22 +24,15 @@ const App: React.FC = () => {
     const setCurrentBoard = useSetAtom(currentBoardAtom);
     const setCleanedPlayers = useSetAtom(cleanedPlayersAtom);
     const display = useAtomValue(displayMode);
+    const players = Object.values(playerData) as unknown as Player[]
 
-    useEffect(() => {
-        const localStorageData = localStorage.getItem("DraftBoards");
-        const initialBoards = (JSON.parse(localStorageData ?? "null" ) as Board[]) ?? [initialBoard];
+    players.forEach((player: Player, index: number) => { player.rank = index + 1; });
+    initialBoard.Players = players;
+    const existingBoards = JSON.parse(localStorage.getItem("DraftBoards") ?? "null") as Board[] ?? [initialBoard];
+    setCleanedPlayers(players);
+    setBoards(existingBoards);
+    setCurrentBoard(existingBoards[0].Name);
 
-        //TODO: Make a call to my API to get the data
-        const filteredPlayers = Object.values(playerData) as unknown as Player[]
-
-        filteredPlayers.forEach((player: Player, index: number) => { player.rank = index + 1; });
-
-        initialBoards[0].Players = filteredPlayers;
-        setCleanedPlayers(filteredPlayers);
-        const existingBoards = JSON.parse(localStorage.getItem("DraftBoards") ?? "null") ?? initialBoards;
-        setBoards(existingBoards);
-        setCurrentBoard(existingBoards[0].Name);
-    }, []);
 
     return (
         <ThemeProvider theme={darkTheme}>

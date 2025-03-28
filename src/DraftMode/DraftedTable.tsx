@@ -7,6 +7,7 @@ import { useAtomValue } from 'jotai';
 import { draftedBoard, teams } from "../Atoms";
 import { PlayerNameCellRenderer } from "../shared/PlayerNameCellRenderer";
 import { formattedPick } from "../shared/utils";
+import type { PlayerDrafted } from "../player";
 
 export const DraftedTable: React.FC = () => {
     const rowData = useAtomValue(draftedBoard).Players;

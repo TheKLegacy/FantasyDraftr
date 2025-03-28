@@ -2,12 +2,26 @@ import { FormControlLabel, Switch, Box } from "@mui/material";
 import React, { ChangeEvent } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { currentFiltersAtom, getCurrentBoard, updateBoard } from "./Atoms";
+import type { Player } from "./player";
+
+const filterKeys = [
+    "QB", "RB", "WR", "TE", "RookiePicks", "Rookies Only"
+] as const;
+
+export type FilterTypes = (typeof filterKeys)[number];
+
+export type FilterValues = Record<FilterTypes, boolean>;
+
+export type Board = {
+    Name: string;
+    Filters: FilterValues;
+    Players: Player[];
+};
 
 export const Filters: React.FC = () => {
     const filters = useAtomValue(currentFiltersAtom);
     const board = useAtomValue(getCurrentBoard);
     const setBoard = useSetAtom(updateBoard);
-    const filterProps = ["QB", "RB", "WR", "TE", "K", "Rookies Only", "DEF", "IDP", "DL", "LB", "DB"] as const;
 
     const updateFilter = (
         event: ChangeEvent<HTMLInputElement>,
@@ -31,16 +45,16 @@ export const Filters: React.FC = () => {
             alignItems="center"
             sx={{ width: "100%" }}
         >
-            {filterProps.map(filterProp => (
+            {filterKeys.map(filterKey => (
                 <FormControlLabel
-                    key={filterProp}
+                    key={filterKey}
                     control={
                         <Switch
-                            checked={filters[filterProp]}
-                            onChange={(e) => updateFilter(e, filterProp)}
+                            checked={filters[filterKey]}
+                            onChange={(e) => updateFilter(e, filterKey)}
                         />
                     }
-                    label={filterProp}
+                    label={filterKey}
                 />
             ))}
         </Box>

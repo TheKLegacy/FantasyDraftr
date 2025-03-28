@@ -2,16 +2,15 @@ import React, { useMemo, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
+import { ColDef, ValueGetterParams, } from "ag-grid-community";
 import { useAtomValue } from 'jotai';
 import { remainingPlayers, teams } from "../Atoms";
 import { PlayerNameCellRenderer } from "../shared/PlayerNameCellRenderer";
-import { formattedPick } from "../shared/utils";
+import type { Player } from "../player";
 
 export const RemainingPlayersTable: React.FC = () => {
     const rowData = useAtomValue(remainingPlayers)?.Players ?? [];
     const numTeams = useAtomValue(teams);
-    console.log(numTeams);
     const defaultColDef = useMemo(() => { return { sortable: false, }; }, []);    
 
         const [columnDefs] = useState<ColDef<Player>[]>([
@@ -65,7 +64,7 @@ export const RemainingPlayersTable: React.FC = () => {
     return (
         <div
             className="ag-theme-alpine-dark"
-            style={{ height: "75vh", width: "420px", margin: "2em" }}
+            style={{ height: "75vh", width: "900px", margin: "2em" }}
         >
             <AgGridReact
                 rowData={rowData.slice(0, 500)}

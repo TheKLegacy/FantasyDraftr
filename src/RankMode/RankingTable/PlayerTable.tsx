@@ -5,19 +5,21 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
-    filteredPlayersAtomNew,
+    filteredPlayersAtom,
     getCurrentBoard,
     updateBoard,
     currentPlayersAtom,
 } from "../../Atoms";
 import { PlayerNameCellRenderer } from "../../shared/PlayerNameCellRenderer";
 import { Actions } from "./Actions";
+import type { Player } from "../../player";
 
 export const PlayerTable: React.FC = () => {
-    const rowData = useAtomValue(filteredPlayersAtomNew(getCurrentBoard));
+    const rowData = useAtomValue(filteredPlayersAtom(getCurrentBoard));
     const currentPlayers = useAtomValue(currentPlayersAtom);
     const board = useAtomValue(getCurrentBoard);
     const setBoard = useSetAtom(updateBoard);
+    console.log("board", board)
 
     const defaultColDef = useMemo(() => { return { sortable: false, }; }, []);    
 
@@ -75,7 +77,7 @@ export const PlayerTable: React.FC = () => {
 
     const onRowDragEnd = (event: RowDragEvent<Player>) => {
         const nodes = event.nodes;
-        const draggedData = nodes.map(node => node.data);
+        const draggedData = nodes.map(node => node.data as Player);
         let updatedData = [...currentPlayers];
 
         const newIndex = updatedData.findIndex(
