@@ -1,22 +1,21 @@
-import React, { useMemo } from "react";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
-import { useAtom, useAtomValue } from "jotai";
+import React from "react";
+import { useAtomValue, useSetAtom } from "jotai";
 import {
-    draftBoard,
     filteredPlayersAtom,
-    remainingPlayers,
-    teams,
+    getCurrentBoard,
+    updateBoard,
+    currentPlayersAtom,
 } from "../Atoms";
 import {
     PlayerColumns,
     StandardPlayerGrid,
 } from "../shared/Grid/StandardPlayerGrid";
 
-export const RemainingPlayersTable: React.FC = () => {
-    const data = useAtomValue(filteredPlayersAtom(draftBoard));
-    const [board, setBoard] = useAtom(draftBoard);
-
+export const PlayerTable: React.FC = () => {
+    const data = useAtomValue(filteredPlayersAtom(getCurrentBoard));
+    const currentPlayers = useAtomValue(currentPlayersAtom);
+    const board = useAtomValue(getCurrentBoard);
+    const setBoard = useSetAtom(updateBoard);
     const columns: PlayerColumns[] = [
         "#",
         "Rank",
@@ -26,17 +25,18 @@ export const RemainingPlayersTable: React.FC = () => {
         "Team",
         "Age",
         "College",
+        "Grid Actions",
     ];
     return (
         <StandardPlayerGrid
             {...{
                 columns,
                 data,
-                currentPlayers: board?.Players ?? [],
+                currentPlayers,
                 board,
                 setBoard,
                 height: "75vh",
-                width: "900px",
+                width: "1080px",
             }}
         />
     );
