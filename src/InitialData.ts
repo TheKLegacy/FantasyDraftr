@@ -1,5 +1,7 @@
+import type { Board } from "./Types";
+
 export const initialBoard = {
-    Name: "Unnamed Board",
+    Name: 'Unnamed Board', 
     Filters: {
         QB: true,
         RB: true,
@@ -14,5 +16,5 @@ export const initialBoard = {
         LB: true,
         DB: true,
     },
-    Players: [],
-} as Board;
+    Players: []
+} as Board

@@ -28,7 +28,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
     const onDelete = () => {
         deleteBoard();
         onClose();
-    };
+    }
 
     return (
         <Dialog
