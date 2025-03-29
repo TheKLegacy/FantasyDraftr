@@ -1,11 +1,11 @@
 import { FormControlLabel, Switch, Box } from "@mui/material";
 import React, { ChangeEvent } from "react";
-import { useAtomValue, useSetAtom } from "jotai";
-import { currentFiltersAtom, getCurrentBoard, updateBoard } from "./Atoms";
-import type { Player } from "./player";
+import { useAtomValue, useSetAtom, } from "jotai";
+import { currentFiltersAtom, updateBoardAction } from "../Atoms";
+import type { Player } from "../player";
 
 const filterKeys = [
-    "QB", "RB", "WR", "TE", "RookiePicks", "Rookies Only"
+    "QB", "RB", "WR", "TE", "Rookies Only"
 ] as const;
 
 export type FilterTypes = (typeof filterKeys)[number];
@@ -18,16 +18,20 @@ export type Board = {
     Players: Player[];
 };
 
-export const Filters: React.FC = () => {
-    const filters = useAtomValue(currentFiltersAtom);
-    const board = useAtomValue(getCurrentBoard);
-    const setBoard = useSetAtom(updateBoard);
+export type filterProps = {
+    board: Board;
+    setBoard: (x: Board) => unknown;
+}
+
+export const Filters: React.FC<filterProps> = (props: filterProps) => {
+    const filters = props.board.Filters
+    const board = props.board
 
     const updateFilter = (
         event: ChangeEvent<HTMLInputElement>,
         filterProp: keyof typeof filters
     ) => {
-        setBoard({
+        props.setBoard({
             ...board,
             Filters: {
                 ...filters,

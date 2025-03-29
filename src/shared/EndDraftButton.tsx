@@ -1,10 +1,10 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { displayMode } from "../Atoms";
+import { displayModeAtom } from "../Atoms";
 import { useSetAtom } from "jotai";
 
 export const EndDraftButton: React.FC = () => {
-    const setDisplayMode = useSetAtom(displayMode);
+    const setDisplayMode = useSetAtom(displayModeAtom);
 
     return (
         <>

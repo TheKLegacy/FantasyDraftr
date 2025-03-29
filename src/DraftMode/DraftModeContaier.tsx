@@ -1,11 +1,15 @@
 import React from "react";
-import { EndDraftButton } from "../shared/EndDraftButton";
-import { Filters } from "../Filters";
+import { EndDraftButton } from "../Shared/EndDraftButton";
+import { Filters } from "../Shared/Filters";
 import { DraftedTable } from "./DraftedTable";
 import { UndraftedTable } from "./UndraftedTable";
-import { TeamCount } from "../shared/TeamCount";
+import { TeamCount } from "../Shared/TeamCount";
+import { useAtom } from "jotai";
+import { draftBoardAtom } from "../Atoms";
 
 export const DraftModeContainer: React.FC = () => {
+    const [board, setBoard] = useAtom(draftBoardAtom);
+
     return (<>
         <div style={{
             display: "flex",
@@ -17,7 +21,7 @@ export const DraftModeContainer: React.FC = () => {
             <EndDraftButton/>
             <TeamCount/>
         </div>
-        <Filters />
+        <Filters board={board!} setBoard={setBoard}/>
         <div
             style={{
                 display: "flex",

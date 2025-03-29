@@ -4,15 +4,15 @@ import type {
     ValueGetterParams,
     RowDragEvent,
 } from "ag-grid-community";
-import { PlayerNameCellRenderer } from "../../shared/PlayerNameCellRenderer";
+import { PlayerNameCellRenderer } from "../../Shared/PlayerNameCellRenderer";
 import type { Player } from "../../player";
-import { handleDrag } from "../../shared/Grid/HandleDrag";
-import DataGridWrapper from "../../shared/Grid/DataGridWrapper";
+import { handleDrag } from "../../Shared/Grid/HandleDrag";
+import DataGridWrapper from "../../Shared/Grid/DataGridWrapper";
 import { Actions } from "./Actions";
-import type { Board } from "../../Filters";
+import type { Board } from "../Filters";
 import { Button } from "@mui/material";
 import { useSetAtom } from "jotai";
-import { draftPlayer } from "../../Atoms";
+import { draftPlayerAction } from "../../Atoms";
 
 export type PlayerColumns =
     | "#"
@@ -42,7 +42,7 @@ export const StandardPlayerGrid: React.FC<PlayerGridProps> = (
     const { columns, data, currentPlayers, board, setBoard, height, width } =
         props;
 
-    const draft = useSetAtom(draftPlayer);
+    const draft = useSetAtom(draftPlayerAction);
 
     // Comprehensive column definitions map
     const columnDefinitionsMap: Record<PlayerColumns, ColDef<Player>> = useMemo(

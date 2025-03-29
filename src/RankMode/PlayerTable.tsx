@@ -2,20 +2,20 @@ import React from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
     filteredPlayersAtom,
-    getCurrentBoard,
-    updateBoard,
+    getCurrentBoardAtom,
+    updateBoardAction,
     currentPlayersAtom,
 } from "../Atoms";
 import {
     PlayerColumns,
     StandardPlayerGrid,
-} from "../shared/Grid/StandardPlayerGrid";
+} from "../Shared/Grid/StandardPlayerGrid";
 
 export const PlayerTable: React.FC = () => {
-    const data = useAtomValue(filteredPlayersAtom(getCurrentBoard));
+    const data = useAtomValue(filteredPlayersAtom(getCurrentBoardAtom));
     const currentPlayers = useAtomValue(currentPlayersAtom);
-    const board = useAtomValue(getCurrentBoard);
-    const setBoard = useSetAtom(updateBoard);
+    const board = useAtomValue(getCurrentBoardAtom);
+    const setBoard = useSetAtom(updateBoardAction);
     const columns: PlayerColumns[] = [
         "#",
         "Rank",
