@@ -1,4 +1,4 @@
-import { FilterTypes } from "./Filters";
+import { FilterTypes } from "./Shared/Filters";
 
 type Player = {
     player_id: string;
@@ -25,7 +25,7 @@ type Player = {
     [key: string]: any;
 };
 
-type positions = Exclude<FilterTypes, "RookiePicks" | "Rookies Only">;
+type positions = Exclude<FilterTypes, "Rookies Only">;
 
 type FilteredPlayers = Player[];
 

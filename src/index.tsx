@@ -7,13 +7,13 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { useAtomValue, useSetAtom } from "jotai";
-import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom, displayMode } from "./Atoms";
+import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom, displayModeAtom } from "./Atoms";
 import { initialBoard } from "./InitialData";
 import { DraftModeContainer } from "./DraftMode/DraftModeContaier";
 import { RankModeContainer } from "./RankMode/RankModeContainer";
 import ProfileIcon from "./AuthComponents/ProfileIcon";
 import { SleeperDraftContainer } from "./SleeperDraft/SleeperDraftContainer";
-import type { Board } from "./Filters";
+import type { Board } from "./Shared/Filters";
 import type { Player } from "./player";
 
 // Create a dark theme
@@ -23,7 +23,7 @@ const App: React.FC = () => {
     const setBoards = useSetAtom(allBoardsAtom);
     const setCurrentBoard = useSetAtom(currentBoardAtom);
     const setCleanedPlayers = useSetAtom(cleanedPlayersAtom);
-    const display = useAtomValue(displayMode);
+    const display = useAtomValue(displayModeAtom);
     const players = Object.values(playerData) as unknown as Player[]
 
     players.forEach((player: Player, index: number) => { player.rank = index + 1; });

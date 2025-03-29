@@ -4,14 +4,14 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
 import { useAtomValue } from "jotai";
-import { draftedBoard, teams } from "../Atoms";
-import { PlayerNameCellRenderer } from "../shared/PlayerNameCellRenderer";
-import { formattedPick } from "../shared/utils";
+import { draftedBoardAtom, teamsAtom } from "../Atoms";
+import { PlayerNameCellRenderer } from "../Shared/PlayerNameCellRenderer";
+import { formattedPick } from "../Shared/utils";
 import type { PlayerDrafted } from "../player";
 
 export const DraftedTable: React.FC = () => {
-    const rowData = useAtomValue(draftedBoard).Players;
-    const numTeams = useAtomValue(teams);
+    const rowData = useAtomValue(draftedBoardAtom).Players;
+    const numTeams = useAtomValue(teamsAtom);
     const defaultColDef = useMemo(() => {
         return { sortable: false };
     }, []);

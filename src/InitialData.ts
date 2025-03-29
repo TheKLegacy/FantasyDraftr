@@ -1,4 +1,4 @@
-import { Board } from "./Filters";
+import { Board } from "./Shared/Filters";
 
 export const initialBoard: Board = {
     Name: 'Unnamed Board', 
@@ -8,7 +8,6 @@ export const initialBoard: Board = {
         WR: true,
         TE: true,
         "Rookies Only": false,
-        RookiePicks: true,
     },
     Players: []
 }

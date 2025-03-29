@@ -1,10 +1,13 @@
 import React from "react";
-import { EndDraftButton } from "../shared/EndDraftButton";
-import { Filters } from "../Filters";
-import { TeamCount } from "../shared/TeamCount";
+import { EndDraftButton } from "../Shared/EndDraftButton";
+import { Filters } from "../Shared/Filters";
 import { RemainingPlayersTable } from "./RemainingPlayersTable";
+import { remainingPlayersAtom } from "../Atoms";
+import { useAtom } from "jotai";
 
 export const SleeperDraftContainer: React.FC = () => {
+    const [board, setBoard]  = useAtom(remainingPlayersAtom);
+
     return (<>
         <div style={{
             display: "flex",
@@ -15,7 +18,7 @@ export const SleeperDraftContainer: React.FC = () => {
         }}>
             <EndDraftButton/>
         </div>
-        <Filters />
+        <Filters board={board!} setBoard={setBoard}/>
         <div
             style={{
                 display: "flex",

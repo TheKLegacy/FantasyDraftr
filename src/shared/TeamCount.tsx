@@ -1,10 +1,10 @@
 import { Button, TextField } from "@mui/material";
 import React from "react";
-import { teams } from "../Atoms";
+import { teamsAtom } from "../Atoms";
 import { useAtom } from "jotai";
 
 export const TeamCount: React.FC = () => {
-    const [numTeams, setNumTeams] = useAtom(teams);
+    const [numTeams, setNumTeams] = useAtom(teamsAtom);
 
     return (
         <>

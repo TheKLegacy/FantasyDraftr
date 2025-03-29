@@ -1,21 +1,18 @@
-import React, { useMemo } from "react";
+import React from "react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useAtom, useAtomValue } from "jotai";
-import {
-    draftBoard,
-    filteredPlayersAtom,
-    remainingPlayers,
-    teams,
-} from "../Atoms";
+import { filteredPlayersAtom, remainingPlayersAtom } from "../Atoms";
 import {
     PlayerColumns,
     StandardPlayerGrid,
-} from "../shared/Grid/StandardPlayerGrid";
+} from "../Shared/Grid/StandardPlayerGrid";
+import { useSleeperDraft } from "../Hooks/useSleeperDraft";
 
 export const RemainingPlayersTable: React.FC = () => {
-    const data = useAtomValue(filteredPlayersAtom(draftBoard));
-    const [board, setBoard] = useAtom(draftBoard);
+    useSleeperDraft();
+    const data = useAtomValue(filteredPlayersAtom(remainingPlayersAtom));
+    const [board, setBoard] = useAtom(remainingPlayersAtom);
 
     const columns: PlayerColumns[] = [
         "#",

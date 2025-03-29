@@ -1,18 +1,21 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { displayMode, getCurrentBoard, remainingPlayers } from "../Atoms";
-import { useAtomValue, useSetAtom } from "jotai";
+import { buttonForModalProps } from "../types";
 
-export const LiveDraftButton: React.FC = () => {
-    const setDisplayMode = useSetAtom(displayMode);
-    const setRemainingPlayers = useSetAtom(remainingPlayers);
-    const currentBoard = useAtomValue(getCurrentBoard);
-
+export const LiveDraftButton: React.FC<buttonForModalProps> = (
+    props: buttonForModalProps
+) => {
     return (
         <>
-            <Button variant="outlined" size="large" onClick={() => {setDisplayMode("livedraft"); setRemainingPlayers(currentBoard);}}>
+            <Button
+                variant="outlined"
+                size="large"
+                onClick={() => {
+                    props.openModal(true);
+                }}
+            >
                 Join Sleeper Draft
             </Button>
         </>
     );
-}
+};
