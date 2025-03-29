@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { signInUser } from '../Firebase/FirebaseAuth';
+import { getUserBoards } from '../Firebase/Firestore';
 
 interface LoginModalProps {
   open: boolean;
@@ -32,6 +33,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
 
     try {
       await signInUser(email, password);
+      console.log("Retreived user boards", getUserBoards());
       onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unexpected error occurred');
