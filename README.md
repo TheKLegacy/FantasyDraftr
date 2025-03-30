@@ -13,21 +13,23 @@ npm run start
 
 ## Todo
 
-- Add sleeper integrated draft board
-  - Highlight worst case scenerio for your upcoming picks
-- Fix actions move buttons with filtered out players
-- Add some confirm modals (Delete board)
-- Add users to draft mode
-- Add accounts
-  - Cleanup login UI
-- Host online
-  - Done via firebase, need a better URL
-- Undo Draft Picks
-- Code Cleanup
-  - Ongoing
-- Get Player data via API call.
-- Field validation in inputs
-- Notes? (I'm concerned that this will take too much storage)
-- Cleanup main Actions.tsx
-- Add modal when clicking on player to view stats
-- reorder based on other draft adps
+-   Add sleeper integrated draft board
+    -   Highlight worst case scenerio for your upcoming picks
+-   Fix actions move buttons with filtered out players
+-   Add some confirm modals (Delete board)
+-   Add users to draft mode
+-   Add accounts
+    -   Cleanup login UI
+-   Host online
+    -   Done via firebase, need a better URL
+-   Undo Draft Picks
+-   Code Cleanup
+    -   Ongoing
+-   Get Player data via API call.
+-   Field validation in inputs
+-   Notes
+    -   Set up email verification to as a requirment when logged in.
+-   Cleanup main Actions.tsx
+-   Add modal when clicking on player to view stats
+-   Reorder based on other draft adps
+-   Add tests to codify behavior

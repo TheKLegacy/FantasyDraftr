@@ -26,11 +26,9 @@ export const Actions: React.FC = () => {
     const updatename = useSetAtom(updateBoardNameAction);
     const setCurrentBoard = useSetAtom(currentBoardAtom);
 
-    const onNameChange = (e: any) => {
-        const newName = e.target.value;
-        updatename({ ...board, NewName: newName });
-    };
-
+    const onNameChange = (e: any) => 
+        updatename({ ...board, NewName: e.target.value });
+    
     return (
         <>
             <div
@@ -50,13 +48,11 @@ export const Actions: React.FC = () => {
                     onChange={onNameChange}
                 />
                 <FormControl>
-                    <InputLabel id="demo-simple-select-label">Draft Boards</InputLabel>
+                    <InputLabel id="select-board">Draft Boards</InputLabel>
                     <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
+                        labelId="select-board"
                         value={board.Name}
                         label="Draft Boards"
-                        onChange={() => {}}
                     >
                         {allBoards.map(({ Name }) => (
                             <MenuItem key={Name} value={Name} onClick={() => setCurrentBoard(Name)}>
