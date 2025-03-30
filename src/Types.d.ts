@@ -1,4 +1,5 @@
 import { PlayerDrafted } from "./player";
+import { FilterValues } from "./Shared/Filters";
 
 type DraftedBoard = {
     Players: PlayerDrafted[];
@@ -45,3 +46,9 @@ type SleeperPick = {
     };
     [key: string]: any;
 };
+
+type BoardPayload = {
+    Name: string;
+    Filters: FilterValues;
+    Players: string[];
+}

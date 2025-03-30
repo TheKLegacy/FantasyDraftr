@@ -10,6 +10,7 @@ import {
 import { useAtom } from "jotai";
 import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom } from "../Atoms";
 import { initialBoard } from '../InitialData';
+import { writeUserBoards } from '../Firebase/Firestore';
 
 type DraftBoardDialogProps = {
   open: boolean;
@@ -23,7 +24,9 @@ const CreateBoardModal: React.FC<DraftBoardDialogProps> = ({ open, onClose }) =>
   const [newBoardName, setNewBoardName] = useState<string>('');
 
   const handleCreate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setBoards([...boards, {...initialBoard, Name:newBoardName, Players: cleanedPlayers}]);
+    const newBoards = [...boards, {...initialBoard, Name:newBoardName, Players: cleanedPlayers}];
+    writeUserBoards(newBoards);
+    setBoards(newBoards);
     setCurrentBoard(newBoardName);
     setNewBoardName('');
     onClose();
