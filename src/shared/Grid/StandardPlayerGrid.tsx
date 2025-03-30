@@ -6,13 +6,13 @@ import type {
 } from "ag-grid-community";
 import { PlayerNameCellRenderer } from "../../Shared/PlayerNameCellRenderer";
 import type { Player } from "../../player";
-import { handleDrag } from "../../Shared/Grid/HandleDrag";
-import DataGridWrapper from "../../Shared/Grid/DataGridWrapper";
 import { Actions } from "./Actions";
 import type { Board } from "../Filters";
 import { Button } from "@mui/material";
 import { useSetAtom } from "jotai";
 import { draftPlayerAction } from "../../Atoms";
+import DataGridWrapper from "./DataGridWrapper";
+import { handleDrag } from "./HandleDrag";
 
 export type PlayerColumns =
     | "#"
