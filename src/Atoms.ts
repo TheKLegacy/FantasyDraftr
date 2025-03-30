@@ -6,6 +6,7 @@ import type { Player } from "./player";
 import type { DraftedBoard, SleeperDraft, SleeperPick } from "./types";
 import { writeUserBoards } from "./Firebase/Firestore";
 import { filterPlayers } from "./Shared/utils";
+import { User } from "firebase/auth";
 
 export const currentBoardAtom = atom<String>("Unnamed Board");
 
@@ -63,12 +64,12 @@ export const updateBoardNameAction = atom(
 				? ({
 						...payload,
 						Name: payload.NewName,
-						NewName: undefined,
 				  } as Board)
 				: board
 		);
 
 		set(currentBoardAtom, payload.NewName);
+        writeUserBoards(updatedBoards);
 		set(allBoardsAtom, updatedBoards);
 	}
 );
@@ -79,6 +80,7 @@ export const deleteCurrentBoardAction = atom(null, (get, set) => {
 	const updatedBoards = allBoards.filter(
 		(board) => board.Name !== currentBoard
 	);
+    writeUserBoards(updatedBoards);
 	set(allBoardsAtom, updatedBoards);
 	set(currentBoardAtom, updatedBoards[0]?.Name ?? "");
 });
@@ -94,8 +96,27 @@ export const filteredPlayersAtom = atomFamily(
 		})
 );
 
-export const allBoardsAtom = atomWithStorage<Board[]>("DraftBoards", [
+export const allBoardsStorageAtom = atomWithStorage<Board[]>("DraftBoards", [
 	initialBoard,
 ]);
+
+export const userAtom = atom<User>();
+
+export const allBoardsUserAtom = atom<Board[]>([]);
+
+export const allBoardsAtom = atom(
+    (get) => {
+      const user = get(userAtom);
+      return user ? get(allBoardsUserAtom) : get(allBoardsStorageAtom);
+    },
+    (get, set, newValue: Board[]) => {
+      const user = get(userAtom); 
+      if (user) {
+        set(allBoardsUserAtom, newValue);
+      } else {
+        set(allBoardsStorageAtom, newValue);
+      }
+    }
+  );
 
 export const cleanedPlayersAtom = atom<Player[]>([]);

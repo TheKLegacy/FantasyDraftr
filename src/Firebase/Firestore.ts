@@ -6,8 +6,9 @@ import {
 	getDoc,
 } from "firebase/firestore";
 import { app } from "./Firebase";
-import { Board } from "../Filters";
 import { user } from "./FirebaseAuth";
+import { Board } from "../Shared/Filters";
+import { BoardPayload } from "../types";
 
 const db = getFirestore(app);
 
@@ -21,6 +22,7 @@ export const writeUserBoards = async (boards: Board[]) => {
 			user.uid || (user.email ?? "unknown")
 		);
 
+		//console.log("payload", boards)
 		// Set the document with the boards data
 		await setDoc(userBoardsRef, {
 			boards: boards.map((b) => ({
@@ -30,13 +32,13 @@ export const writeUserBoards = async (boards: Board[]) => {
 			updatedAt: serverTimestamp(),
 		});
 
-		console.log("Document updated for user: ", user.email);
+		//console.log("Document updated for user: ", user.email);
 	} catch (e) {
 		console.error("Error updating document: ", e);
 	}
 };
 
-export const getUserBoards = async () => {
+export const getUserBoards = async (): Promise<BoardPayload[] | null> => {
 	if (!user) return null;
 	try {
 		const userBoardsRef = doc(
