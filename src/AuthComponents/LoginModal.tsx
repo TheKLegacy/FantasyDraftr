@@ -38,28 +38,24 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
 
         setIsLoading(true);
         setError(null);
-
-        try {
-            const user = await signInUser(email, password);
-            if (!user) return;
-            setUser(user);
-            const userBoards = await getUserBoards();
-            if ((userBoards?.length ?? 0 > 0) && !!userBoards?.[0]) {
-                setAllBoard(allocateBoards(userBoards));
-                setCurrentBoard(userBoards[0].Name);
-            }
-            onClose();
-        } catch (err) {
-            setError(
-                err instanceof Error
-                    ? err.message
-                    : "An unexpected error occurred"
-            );
-            setIsLoading(false);
+        const user = await signInUser(email, password);
+        setIsLoading(false);
+        if (!user) {
+            setError("Invalid Login");
+            return;
         }
+        setUser(user);
+        const userBoards = await getUserBoards();
+        if ((userBoards?.length ?? 0 > 0) && !!userBoards?.[0]) {
+            setAllBoard(allocateBoards(userBoards));
+            setCurrentBoard(userBoards[0].Name);
+        }
+        onClose();
     };
 
     const handleCancel = () => {
+        setError(null);
+        setPassword("");
         onClose();
     };
 

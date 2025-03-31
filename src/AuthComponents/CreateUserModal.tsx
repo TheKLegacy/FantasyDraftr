@@ -50,22 +50,22 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ open, onClose }) => {
     }
 
     setIsLoading(true);
+    const user = await createUser(email, password);
 
-    try {
-      await createUser(email, password);
-      onClose();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
-    } finally {
+    if(!user){
+      setError("Failed to create user");
       setIsLoading(false);
+      return;
     }
+
+    handleCancel();
   };
 
   const handleCancel = () => {
-    setEmail('');
     setPassword('');
     setConfirmPassword('');
     setError(null);
+    setIsLoading(false);
     onClose();
   };
 

@@ -37,7 +37,8 @@ export const Actions: React.FC = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     gap: "8px",
-                    margin: "2em",
+                    marginTop: "3.5em",
+                    marginBottom: "1em"
                 }}
             >
                 <TextField
