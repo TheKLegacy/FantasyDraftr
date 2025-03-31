@@ -3,11 +3,13 @@ import {
 	createUserWithEmailAndPassword,
 	User,
 	signInWithEmailAndPassword,
+	signOut
 } from "firebase/auth";
 import { app, firebaseErrorString } from "./Firebase";
 
 const auth = getAuth(app);
 const authErrorString = `${firebaseErrorString} Auth ->`;
+const invalidLogin = "auth/invalid-credential";
 export let user: User | undefined = undefined;
 
 export const createUser = async (
@@ -24,6 +26,7 @@ export const createUser = async (
 		return user;
 	} catch (error: unknown) {
 		if (error instanceof Error) {
+			if((error as any).code === invalidLogin) return null;
 			console.error(
 				`${authErrorString} Create User -> Code:`,
 				(error as any).code
@@ -67,3 +70,8 @@ export const signInUser = async (
 		return null;
 	}
 };
+
+export const logOut = () => {
+	signOut(auth);
+	user = undefined;
+}
