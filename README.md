@@ -19,7 +19,6 @@ npm run start
 - Add users to draft mode
 - Host online
   - Done via firebase, need a better URL
-- Undo Draft Picks
 - Code Cleanup
   - Ongoing
 - Get Player data via API call.
