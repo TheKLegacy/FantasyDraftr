@@ -31,4 +31,4 @@ npm run start
 - Add tests to codify behavior
 - Cleanup log in/log behavior for defualting to an existing board or initialboard
   - On log needs to defualt to initial board if there are no boards
-  - on logout need to defualt to first board in local storage.
+  - on logout need to defualt to first board in local storage
