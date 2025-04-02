@@ -9,7 +9,7 @@ export const filterPlayers = (players: Player[], filters: FilterValues): Player[
     return players.filter(player => {
         const positionMatches = filters[player?.position];
         
-        if(filters["Rookies Only"] && player.years_exp !== 0){
+        if(filters["Rookies Only"] && player?.years_exp !== 0){
             return false;
         }
 

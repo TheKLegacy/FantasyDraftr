@@ -43,7 +43,6 @@ const propertiesToRemove = [
     "weight",
     "number",
     "active",
-    "years_exp",
     "fantasy_positions"
 ];
 
