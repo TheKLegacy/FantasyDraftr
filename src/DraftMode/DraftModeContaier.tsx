@@ -6,6 +6,7 @@ import { UndraftedTable } from "./UndraftedTable";
 import { TeamCount } from "../Shared/TeamCount";
 import { useAtom } from "jotai";
 import { draftBoardAtom } from "../Atoms";
+import { UndoPickButton } from "./UndoPickButton";
 
 export const DraftModeContainer: React.FC = () => {
     const [board, setBoard] = useAtom(draftBoardAtom);
@@ -20,6 +21,7 @@ export const DraftModeContainer: React.FC = () => {
         }}>
             <EndDraftButton/>
             <TeamCount/>
+            <UndoPickButton/>
         </div>
         <Filters board={board!} setBoard={setBoard}/>
         <div
