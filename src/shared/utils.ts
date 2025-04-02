@@ -7,14 +7,14 @@ export const formattedPick = (pick: number, teams: number) =>
 export const filterPlayers = (players: Player[], filters: FilterValues): Player[] => {
     let qbRanking = 0, rbRanking = 0, wrRanking = 0, teRanking = 0, dlRanking = 0, lbRanking = 0, dbRanking = 0;
     return players.filter(player => {
-        const positionMatches = filters[player.position];
+        const positionMatches = filters[player?.position];
         
         if(filters["Rookies Only"] && player.years_exp !== 0){
             return false;
         }
 
         if(positionMatches){
-            switch(player.position.toUpperCase()) {
+            switch(player?.position.toUpperCase()) {
                 case "QB":
                     player.posRank = ++qbRanking;
                     break;
