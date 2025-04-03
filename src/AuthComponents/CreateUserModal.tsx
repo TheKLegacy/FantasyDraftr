@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, KeyboardEvent } from 'react';
 import {
   Button,
   Dialog,
@@ -13,7 +13,7 @@ import {
 import { createUser } from '../Firebase/FirebaseAuth';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 
-interface CreateUserModalProps {
+type CreateUserModalProps = {
   open: boolean;
   onClose: () => void;
 }
@@ -42,7 +42,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ open, onClose }) => {
     return true;
   };
 
-  const handleCreate = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleCreate = async () => {
     setError(null);
     
     if (!validateForm()) {
@@ -73,6 +73,13 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ open, onClose }) => {
     setShowPassword((prev) => !prev);
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter' && email.trim() && !isLoading) {
+      e.preventDefault();
+      handleCreate();
+    }
+  };
+
   const passwordInputProps = {
     endAdornment: (
       <InputAdornment position="end">
@@ -97,7 +104,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ open, onClose }) => {
       fullWidth
     >
       <DialogTitle id="create-user-dialog-title">Create an Account</DialogTitle>
-      <DialogContent>
+      <DialogContent onKeyDown={handleKeyDown}>
         <TextField
           autoFocus
           margin="dense"
@@ -161,7 +168,7 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({ open, onClose }) => {
           Cancel
         </Button>
         <Button
-          onClick={handleCreate}
+          onClick={() => handleCreate()}
           color="primary"
           variant="contained"
           disabled={!email.trim() || isLoading}

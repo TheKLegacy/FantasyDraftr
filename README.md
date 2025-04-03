@@ -29,9 +29,8 @@ npm run start
 -   Add modal when clicking on player to view stats
 -   Reorder based on other draft adps
 -   Add tests to codify behavior
--   Enter key triggers login and register
-    -Add logo/name top right
-    -Add website & socials in footer.
+-   Add logo/name top right
+-   Add website & socials in footer.
 -   Cleanup log in/log behavior for defualting to an existing board or initialboard
     -   On log needs to defualt to initial board if there are no boards
     -   on logout need to defualt to first board in local storage

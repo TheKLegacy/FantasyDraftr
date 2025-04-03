@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, KeyboardEvent } from "react";
 import {
     Button,
     Dialog,
@@ -16,7 +16,7 @@ import { allocateBoards } from "../Scripts/AllocatePlayersToBoards";
 import { useSetAtom } from "jotai";
 import { allBoardsAtom, currentBoardAtom, userAtom } from "../Atoms";
 
-interface LoginModalProps {
+type LoginModalProps = {
     open: boolean;
     onClose: () => void;
 }
@@ -31,9 +31,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
     const setCurrentBoard = useSetAtom(currentBoardAtom);
     const setUser = useSetAtom(userAtom);
 
-    const handleSignIn = async (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
+    const handleSignIn = async () => {
         if (!email.trim()) return;
 
         setIsLoading(true);
@@ -63,6 +61,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
         setShowPassword((prev) => !prev);
     };
 
+    const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' && email.trim() && !isLoading) {
+            e.preventDefault();
+            handleSignIn();
+        }
+    };
+
     const passwordInputProps = {
         endAdornment: (
             <InputAdornment position="end">
@@ -90,7 +95,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
         >
             <DialogTitle id="login-dialog-title">Log In</DialogTitle>
 
-            <DialogContent>
+            <DialogContent onKeyDown={handleKeyDown}>
                 <TextField
                     autoFocus
                     margin="dense"
@@ -126,7 +131,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                     Cancel
                 </Button>
                 <Button
-                    onClick={handleSignIn}
+                    onClick={() => handleSignIn()}
                     color="primary"
                     variant="contained"
                     disabled={!email.trim() || isLoading}
