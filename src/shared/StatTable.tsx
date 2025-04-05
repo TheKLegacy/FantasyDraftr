@@ -22,17 +22,17 @@ function getStatColumns(position: positions): [string[], string[]] {
             ];
         case "RB":
             return [
-                ["rush_yd", "rush_td", "rec_yar", "rec_td", "rec"],
+                ["rush_yd", "rush_td", "rec_yd", "rec_td", "rec"],
                 ["Rush Yards", "Rush TDs", "Rec Yards", "Rec TDs", "Recs"],
             ];
         case "WR":
             return [
-                ["rec_yar", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
+                ["rec_yd", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
                 ["Rec Yards", "Rec TDs", "Recs", "Tgts", "RZ Tgts"],
             ];
         case "TE":
             return [
-                ["rec_yar", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
+                ["rec_yd", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
                 ["Rec Yards", "Rec TDs", "Recs", "Tgts", "RZ Tgts"],
             ];
     }
