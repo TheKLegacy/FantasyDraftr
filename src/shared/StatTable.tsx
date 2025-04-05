@@ -13,28 +13,28 @@ type statTableProps = {
     position: positions;
 };
 
-function getStatColumns(position: positions): [string[], string[]] {
+function getStatColumns(position: positions): { statKeys: string[]; statDisplayNames: string[] } {
     switch (position) {
         case "QB":
-            return [
-                ["pass_yd", "pass_td", "pass_int", "rush_td", "rush_yd"],
-                ["Pass Yards", "Pass TDs", "Ints", "Rush TDs", "Rush Yards"],
-            ];
+            return {
+                statKeys: ["pass_yd", "pass_td", "pass_int", "rush_td", "rush_yd"],
+                statDisplayNames: ["Pass Yards", "Pass TDs", "Ints", "Rush TDs", "Rush Yards"],
+            };
         case "RB":
-            return [
-                ["rush_yd", "rush_td", "rec_yd", "rec_td", "rec"],
-                ["Rush Yards", "Rush TDs", "Rec Yards", "Rec TDs", "Recs"],
-            ];
+            return {
+                statKeys: ["rush_yd", "rush_td", "rec_yd", "rec_td", "rec"],
+                statDisplayNames: ["Rush Yards", "Rush TDs", "Rec Yards", "Rec TDs", "Recs"],
+            };
         case "WR":
-            return [
-                ["rec_yd", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
-                ["Rec Yards", "Rec TDs", "Recs", "Tgts", "RZ Tgts"],
-            ];
+            return {
+                statKeys: ["rec_yd", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
+                statDisplayNames: ["Rec Yards", "Rec TDs", "Recs", "Tgts", "RZ Tgts"],
+            };
         case "TE":
-            return [
-                ["rec_yd", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
-                ["Rec Yards", "Rec TDs", "Recs", "Tgts", "RZ Tgts"],
-            ];
+            return {
+                statKeys: ["rec_yd", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
+                statDisplayNames: ["Rec Yards", "Rec TDs", "Recs", "Tgts", "RZ Tgts"],
+            };
     }
 }
 
@@ -43,13 +43,13 @@ const StatTable: React.FC<statTableProps> = ({ rows, position }) => {
 
     return (
         <TableContainer>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="player stats">
+            <Table size="small" aria-label="player stats">
                 <TableHead>
                     <TableRow>
                         <TableCell>Year</TableCell>
                         <TableCell align="right">PPR Rank</TableCell>
                         <TableCell align="right">GP</TableCell>
-                        {statColumns[1].map((th) => (
+                        {statColumns.statDisplayNames.map((th) => (
                             <TableCell align="right">{th}</TableCell>
                         ))}
                     </TableRow>
@@ -57,10 +57,10 @@ const StatTable: React.FC<statTableProps> = ({ rows, position }) => {
                 <TableBody>
                     {rows.map((row) => (
                         <TableRow>
-                            <TableCell align="right">{row.season}</TableCell>
+                            <TableCell>{row.season}</TableCell>
                             <TableCell align="right">{row.stats.pos_rank_ppr}</TableCell>
                             <TableCell align="right">{row.stats.gp}</TableCell>
-                            {statColumns[0].map((td) => (
+                            {statColumns.statKeys.map((td) => (
                                 <TableCell align="right">{row.stats[td]}</TableCell>
                             ))}
                         </TableRow>
