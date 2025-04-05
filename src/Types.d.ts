@@ -52,3 +52,7 @@ type BoardPayload = {
     Filters: FilterValues;
     Players: string[];
 };
+
+type PlayerNote = {
+    [key: string]: any;
+}

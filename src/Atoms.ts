@@ -3,7 +3,7 @@ import { initialBoard } from "./InitialData";
 import { atomFamily, atomWithStorage } from "jotai/utils";
 import type { Board } from "./Shared/Filters";
 import type { Player } from "./player";
-import type { DraftedBoard, SleeperDraft, SleeperPick } from "./Types";
+import type { DraftedBoard, PlayerNote, SleeperDraft, SleeperPick } from "./Types";
 import { writeUserBoards } from "./Firebase/Firestore";
 import { filterPlayers } from "./Shared/utils";
 import { User } from "firebase/auth";
@@ -105,3 +105,5 @@ export const allBoardsAtom = atom(
 );
 
 export const cleanedPlayersAtom = atom<Player[]>([]);
+
+export const playerNotes = atom<PlayerNote>({});

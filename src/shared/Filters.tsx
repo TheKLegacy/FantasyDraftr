@@ -1,7 +1,5 @@
 import { FormControlLabel, Switch, Box } from "@mui/material";
 import React, { ChangeEvent } from "react";
-import { useAtomValue, useSetAtom } from "jotai";
-import { currentFiltersAtom, updateBoardAction } from "../Atoms";
 import type { Player } from "../player";
 
 const filterKeys = ["QB", "RB", "WR", "TE", "Rookies Only"] as const;

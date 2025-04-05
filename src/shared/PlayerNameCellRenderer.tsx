@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SyntheticEvent } from "react";
 import { Player } from "../player";
-import PlayerModal from "./PlayerModal";
+import PlayerModal from "./PlayerModal/PlayerModal";
 
 export const PlayerNameCellRenderer = (props: { data: Player }) => {
     const { data } = props;

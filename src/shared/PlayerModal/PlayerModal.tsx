@@ -1,9 +1,10 @@
 import React, { useEffect, useState, SyntheticEvent } from "react";
 import { Dialog, DialogContent, DialogTitle, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { Player } from "../player";
+import { Player } from "../../player";
 import StatTable from "./StatTable";
-import { getPlayerStats, PlayerStatParent } from "../Scripts/SleeperGetPlayer";
+import { getPlayerStats, PlayerStatParent } from "../../Scripts/SleeperGetPlayer";
+import Notes from "./Notes";
 
 type PlayerModalProps = {
     player: Player;
@@ -68,15 +69,7 @@ const PlayerModal: React.FC<PlayerModalProps> = ({ player, open, onClose, imageU
                         onError={handleImageError}
                         alt={player.full_name}
                     />
-                    <TextField
-                        id="filled-multiline-static"
-                        label="Notes"
-                        multiline
-                        rows={4}
-                        defaultValue=""
-                        variant="filled"
-                        fullWidth
-                    />
+                    <Notes playerId={player.player_id}/>
                 </div>
                 {loading ? <div>Loading stats...</div> : <StatTable rows={playerStats} position={player.position} />}
             </DialogContent>

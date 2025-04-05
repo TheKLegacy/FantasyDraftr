@@ -5,8 +5,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { PlayerStatParent } from "../Scripts/SleeperGetPlayer";
-import { positions } from "../player";
+import { PlayerStatParent } from "../../Scripts/SleeperGetPlayer";
+import { positions } from "../../player";
 
 type statTableProps = {
     rows: PlayerStatParent[];
