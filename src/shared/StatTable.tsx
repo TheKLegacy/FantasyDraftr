@@ -50,7 +50,7 @@ function getStatColumns(position: positions): [string[], string[]] {
             ];
         case "TE":
             return [
-                ["rec_yds", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
+                ["rec_yar", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
                 [
                     "Rec Yards",
                     "Rec TDs",
