@@ -13,4 +13,4 @@ export const EndDraftButton: React.FC = () => {
             </Button>
         </>
     );
-}
+};

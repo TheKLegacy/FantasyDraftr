@@ -1,70 +1,58 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from '@mui/material';
+import React, { useState } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { useAtom } from "jotai";
 import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom } from "../Atoms";
-import { initialBoard } from '../InitialData';
-import { writeUserBoards } from '../Firebase/Firestore';
+import { initialBoard } from "../InitialData";
+import { writeUserBoards } from "../Firebase/Firestore";
 
 type DraftBoardDialogProps = {
-  open: boolean;
-  onClose: () => void;
+    open: boolean;
+    onClose: () => void;
 };
 
 const CreateBoardModal: React.FC<DraftBoardDialogProps> = ({ open, onClose }) => {
-  const [boards, setBoards] = useAtom(allBoardsAtom);
-  const [cleanedPlayers] = useAtom(cleanedPlayersAtom);
-  const [_, setCurrentBoard] = useAtom(currentBoardAtom);
-  const [newBoardName, setNewBoardName] = useState<string>('');
+    const [boards, setBoards] = useAtom(allBoardsAtom);
+    const [cleanedPlayers] = useAtom(cleanedPlayersAtom);
+    const [_, setCurrentBoard] = useAtom(currentBoardAtom);
+    const [newBoardName, setNewBoardName] = useState<string>("");
 
-  const handleCreate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const newBoards = [...boards, {...initialBoard, Name:newBoardName, Players: cleanedPlayers}];
-    writeUserBoards(newBoards);
-    setBoards(newBoards);
-    setCurrentBoard(newBoardName);
-    setNewBoardName('');
-    onClose();
-  };
+    const handleCreate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        const newBoards = [...boards, { ...initialBoard, Name: newBoardName, Players: cleanedPlayers }];
+        writeUserBoards(newBoards);
+        setBoards(newBoards);
+        setCurrentBoard(newBoardName);
+        setNewBoardName("");
+        onClose();
+    };
 
-  const handleCancel = () => {
-    setNewBoardName('');
-    onClose();
-  };
+    const handleCancel = () => {
+        setNewBoardName("");
+        onClose();
+    };
 
-  return (
-    <Dialog open={open} onClose={handleCancel} aria-labelledby="draft-board-dialog-title">
-      <DialogTitle id="draft-board-dialog-title">Create New Draft Board</DialogTitle>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          label="Draft Board Name"
-          fullWidth
-          value={newBoardName}
-          onChange={(e) => setNewBoardName(e.target.value)}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleCancel} color="secondary">
-          Cancel
-        </Button>
-        <Button
-          onClick={handleCreate}
-          color="primary"
-          variant="contained"
-          disabled={!newBoardName.trim()}
-        >
-          Create
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+    return (
+        <Dialog open={open} onClose={handleCancel} aria-labelledby="draft-board-dialog-title">
+            <DialogTitle id="draft-board-dialog-title">Create New Draft Board</DialogTitle>
+            <DialogContent>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Draft Board Name"
+                    fullWidth
+                    value={newBoardName}
+                    onChange={(e) => setNewBoardName(e.target.value)}
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleCancel} color="secondary">
+                    Cancel
+                </Button>
+                <Button onClick={handleCreate} color="primary" variant="contained" disabled={!newBoardName.trim()}>
+                    Create
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
 };
 
 export default CreateBoardModal;

@@ -26,8 +26,7 @@ export const DraftedTable: React.FC = () => {
             },
             {
                 headerName: "Pos",
-                valueGetter: (params: ValueGetterParams<PlayerDrafted>) =>
-                    params.data?.position,
+                valueGetter: (params: ValueGetterParams<PlayerDrafted>) => params.data?.position,
                 width: 80,
             },
             {
@@ -39,13 +38,8 @@ export const DraftedTable: React.FC = () => {
     );
 
     return (
-        <div
-            style={{ height: "75vh", margin: "1em" }}
-        >
-            <div
-                className="ag-theme-alpine-dark"
-                style={{ height: "75vh", width: "420px", margin: "1em" }}
-            >
+        <div style={{ height: "75vh", margin: "1em" }}>
+            <div className="ag-theme-alpine-dark" style={{ height: "75vh", width: "420px", margin: "1em" }}>
                 <AgGridReact
                     rowData={rowData.slice(0, 500)}
                     columnDefs={columnDefs}

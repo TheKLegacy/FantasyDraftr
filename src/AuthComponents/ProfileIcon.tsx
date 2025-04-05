@@ -44,11 +44,14 @@ const ProfileIcon: React.FC = () => {
                         </>
                     ) : (
                         <>
-                        <Button
+                            <Button
                                 size="small"
                                 variant="contained"
                                 color="primary"
-                                onClick={() => {logOut(); setUser(undefined)}}
+                                onClick={() => {
+                                    logOut();
+                                    setUser(undefined);
+                                }}
                             >
                                 Log out
                             </Button>
@@ -56,15 +59,9 @@ const ProfileIcon: React.FC = () => {
                     )}
                 </Stack>
 
-                <LoginModal
-                    open={isLoginModalOpen}
-                    onClose={() => setIsLoginModalOpen(false)}
-                />
+                <LoginModal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
 
-                <CreateUserModal
-                    open={isCreateModalOpen}
-                    onClose={() => setIsCreateModalOpen(false)}
-                />
+                <CreateUserModal open={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} />
             </Box>
         </>
     );

@@ -10,25 +10,25 @@ export const UndoPickButton: React.FC = () => {
 
     const undoPick = () => {
         if (draftedBoard.Players.length > 0) {
-          const lastPlayer = draftedBoard.Players.pop();
-      
-          if (lastPlayer) {
-            setDraftBoard(prev => {
-              const currentPlayers = prev!.Players;
-      
-              return {
-                ...prev!,
-                Players: [lastPlayer, ...currentPlayers],
-              };
-            });
-      
-            setDraftedBoard({
-              Players: [...draftedBoard.Players],
-              Pick: draftedBoard.Pick,
-            });
-          }
+            const lastPlayer = draftedBoard.Players.pop();
+
+            if (lastPlayer) {
+                setDraftBoard((prev) => {
+                    const currentPlayers = prev!.Players;
+
+                    return {
+                        ...prev!,
+                        Players: [lastPlayer, ...currentPlayers],
+                    };
+                });
+
+                setDraftedBoard({
+                    Players: [...draftedBoard.Players],
+                    Pick: draftedBoard.Pick,
+                });
+            }
         }
-      };
+    };
 
     return (
         <>

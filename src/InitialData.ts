@@ -1,7 +1,7 @@
 import { Board } from "./Shared/Filters";
 
 export const initialBoard: Board = {
-    Name: 'Unnamed Board', 
+    Name: "Unnamed Board",
     Filters: {
         QB: true,
         RB: true,
@@ -9,5 +9,5 @@ export const initialBoard: Board = {
         TE: true,
         "Rookies Only": false,
     },
-    Players: []
-}
+    Players: [],
+};

@@ -1,12 +1,10 @@
 import { FormControlLabel, Switch, Box } from "@mui/material";
 import React, { ChangeEvent } from "react";
-import { useAtomValue, useSetAtom, } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { currentFiltersAtom, updateBoardAction } from "../Atoms";
 import type { Player } from "../player";
 
-const filterKeys = [
-    "QB", "RB", "WR", "TE", "Rookies Only"
-] as const;
+const filterKeys = ["QB", "RB", "WR", "TE", "Rookies Only"] as const;
 
 export type FilterTypes = (typeof filterKeys)[number];
 
@@ -21,16 +19,13 @@ export type Board = {
 export type filterProps = {
     board: Board;
     setBoard: (x: Board) => unknown;
-}
+};
 
 export const Filters: React.FC<filterProps> = (props: filterProps) => {
-    const filters = props.board.Filters
-    const board = props.board
+    const filters = props.board.Filters;
+    const board = props.board;
 
-    const updateFilter = (
-        event: ChangeEvent<HTMLInputElement>,
-        filterProp: keyof typeof filters
-    ) => {
+    const updateFilter = (event: ChangeEvent<HTMLInputElement>, filterProp: keyof typeof filters) => {
         props.setBoard({
             ...board,
             Filters: {
@@ -41,26 +36,14 @@ export const Filters: React.FC<filterProps> = (props: filterProps) => {
     };
 
     return (
-        <Box
-            display="flex"
-            flexWrap="wrap"
-            gap={2}
-            justifyContent="center"
-            alignItems="center"
-            sx={{ width: "100%" }}
-        >
-            {filterKeys.map(filterKey => (
+        <Box display="flex" flexWrap="wrap" gap={2} justifyContent="center" alignItems="center" sx={{ width: "100%" }}>
+            {filterKeys.map((filterKey) => (
                 <FormControlLabel
                     key={filterKey}
-                    control={
-                        <Switch
-                            checked={filters[filterKey]}
-                            onChange={(e) => updateFilter(e, filterKey)}
-                        />
-                    }
+                    control={<Switch checked={filters[filterKey]} onChange={(e) => updateFilter(e, filterKey)} />}
                     label={filterKey}
                 />
             ))}
         </Box>
     );
-}
+};

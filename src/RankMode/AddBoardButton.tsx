@@ -10,7 +10,7 @@ export const AddBoardButton: React.FC = () => {
             <Button variant="outlined" size="large" onClick={() => setOpenBoardModal(true)}>
                 Add Board
             </Button>
-            <CreateBoardModal open={openBoardModal} onClose={() => setOpenBoardModal(false)}/>
+            <CreateBoardModal open={openBoardModal} onClose={() => setOpenBoardModal(false)} />
         </>
     );
-}
+};

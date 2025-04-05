@@ -1,12 +1,5 @@
 import React from "react";
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-} from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { deleteCurrentBoardAction } from "../Atoms";
 import { useSetAtom } from "jotai";
 
@@ -28,14 +21,10 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
     const onDelete = () => {
         deleteBoard();
         onClose();
-    }
+    };
 
     return (
-        <Dialog
-            open={open}
-            onClose={onClose}
-            aria-labelledby="delete-modal-title"
-        >
+        <Dialog open={open} onClose={onClose} aria-labelledby="delete-modal-title">
             <DialogTitle id="delete-modal-title">{title}</DialogTitle>
             <DialogContent>
                 <DialogContentText>{description}</DialogContentText>

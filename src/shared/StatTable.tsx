@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -18,50 +18,23 @@ function getStatColumns(position: positions): [string[], string[]] {
         case "QB":
             return [
                 ["pass_yd", "pass_td", "pass_int", "rush_td", "rush_yd"],
-                [
-                    "Pass Yards",
-                    "Pass TDs",
-                    "Ints",
-                    "Rush TDs",
-                    "Rush Yards",
-                ],
+                ["Pass Yards", "Pass TDs", "Ints", "Rush TDs", "Rush Yards"],
             ];
         case "RB":
             return [
                 ["rush_yd", "rush_td", "rec_yar", "rec_td", "rec"],
-                [
-                    "Rush Yards",
-                    "Rush TDs",
-                    "Rec Yards",
-                    "Rec TDs",
-                    "Recs",
-                ],
+                ["Rush Yards", "Rush TDs", "Rec Yards", "Rec TDs", "Recs"],
             ];
         case "WR":
             return [
                 ["rec_yar", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
-                [
-                    "Rec Yards",
-                    "Rec TDs",
-                    "Recs",
-                    "Tgts",
-                    "RZ Tgts",
-                ],
+                ["Rec Yards", "Rec TDs", "Recs", "Tgts", "RZ Tgts"],
             ];
         case "TE":
             return [
                 ["rec_yar", "rec_td", "rec", "rec_tgt", "rec_rz_tgt"],
-                [
-                    "Rec Yards",
-                    "Rec TDs",
-                    "Recs",
-                    "Tgts",
-                    "RZ Tgts",
-                ],
+                ["Rec Yards", "Rec TDs", "Recs", "Tgts", "RZ Tgts"],
             ];
-        default:
-            const _exhaustive: never = position;
-            throw new Error(`Unhandled position: ${_exhaustive}`);
     }
 }
 
@@ -70,11 +43,7 @@ const StatTable: React.FC<statTableProps> = ({ rows, position }) => {
 
     return (
         <TableContainer>
-            <Table
-                sx={{ minWidth: 650 }}
-                size="small"
-                aria-label="player stats"
-            >
+            <Table sx={{ minWidth: 650 }} size="small" aria-label="player stats">
                 <TableHead>
                     <TableRow>
                         <TableCell>Year</TableCell>

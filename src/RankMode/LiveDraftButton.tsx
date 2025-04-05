@@ -1,10 +1,8 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { buttonForModalProps } from "../types";
+import { buttonForModalProps } from "../Types";
 
-export const LiveDraftButton: React.FC<buttonForModalProps> = (
-    props: buttonForModalProps
-) => {
+export const LiveDraftButton: React.FC<buttonForModalProps> = (props: buttonForModalProps) => {
     return (
         <>
             <Button

@@ -11,9 +11,17 @@ export const StartDraftButton: React.FC = () => {
 
     return (
         <>
-            <Button variant="outlined" size="large" onClick={() => (setDisplayMode("draft"),  setDraftBoardAtom(currentBoard), setdraftedBoardAtom({Players: [], Pick: 0}))}>
+            <Button
+                variant="outlined"
+                size="large"
+                onClick={() => (
+                    setDisplayMode("draft"),
+                    setDraftBoardAtom(currentBoard),
+                    setdraftedBoardAtom({ Players: [], Pick: 0 })
+                )}
+            >
                 Start Draft
             </Button>
         </>
     );
-}
+};

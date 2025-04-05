@@ -19,7 +19,7 @@ import { allBoardsAtom, currentBoardAtom, userAtom } from "../Atoms";
 type LoginModalProps = {
     open: boolean;
     onClose: () => void;
-}
+};
 
 const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
     const [email, setEmail] = useState<string>("");
@@ -62,7 +62,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
     };
 
     const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === 'Enter' && email.trim() && !isLoading) {
+        if (e.key === "Enter" && email.trim() && !isLoading) {
             e.preventDefault();
             handleSignIn();
         }
@@ -72,9 +72,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
         endAdornment: (
             <InputAdornment position="end">
                 <IconButton
-                    aria-label={
-                        showPassword ? "Hide password" : "Show password"
-                    }
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                     onClick={togglePasswordVisibility}
                     edge="end"
                     onMouseDown={(e: React.MouseEvent) => e.preventDefault()}
@@ -86,13 +84,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
     };
 
     return (
-        <Dialog
-            open={open}
-            onClose={handleCancel}
-            aria-labelledby="login-dialog-title"
-            maxWidth="xs"
-            fullWidth
-        >
+        <Dialog open={open} onClose={handleCancel} aria-labelledby="login-dialog-title" maxWidth="xs" fullWidth>
             <DialogTitle id="login-dialog-title">Log In</DialogTitle>
 
             <DialogContent onKeyDown={handleKeyDown}>
@@ -123,11 +115,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
             </DialogContent>
 
             <DialogActions>
-                <Button
-                    onClick={handleCancel}
-                    color="secondary"
-                    disabled={isLoading}
-                >
+                <Button onClick={handleCancel} color="secondary" disabled={isLoading}>
                     Cancel
                 </Button>
                 <Button

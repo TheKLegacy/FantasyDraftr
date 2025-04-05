@@ -19,11 +19,8 @@ export const PlayerNameCellRenderer = (props: { data: Player }) => {
                             flex: "0 0 32px",
                         }}
                         src={imageUrl}
-                        onError={(
-                            event: SyntheticEvent<HTMLImageElement, Event>
-                        ) => {
-                            event.currentTarget.src =
-                                "https://sleepercdn.com/images/v2/icons/player_default.webp";
+                        onError={(event: SyntheticEvent<HTMLImageElement, Event>) => {
+                            event.currentTarget.src = "https://sleepercdn.com/images/v2/icons/player_default.webp";
                         }}
                     />
                 </span>

@@ -1,9 +1,5 @@
 import React, { useMemo } from "react";
-import type {
-    ColDef,
-    ValueGetterParams,
-    RowDragEvent,
-} from "ag-grid-community";
+import type { ColDef, ValueGetterParams, RowDragEvent } from "ag-grid-community";
 import { PlayerNameCellRenderer } from "../../Shared/PlayerNameCellRenderer";
 import type { Player } from "../../player";
 import { Actions } from "./Actions";
@@ -36,11 +32,8 @@ type PlayerGridProps = {
     width?: string;
 };
 
-export const StandardPlayerGrid: React.FC<PlayerGridProps> = (
-    props: PlayerGridProps
-) => {
-    const { columns, data, currentPlayers, board, setBoard, height, width } =
-        props;
+export const StandardPlayerGrid: React.FC<PlayerGridProps> = (props: PlayerGridProps) => {
+    const { columns, data, currentPlayers, board, setBoard, height, width } = props;
 
     const draft = useSetAtom(draftPlayerAction);
 
@@ -54,20 +47,17 @@ export const StandardPlayerGrid: React.FC<PlayerGridProps> = (
             },
             Rank: {
                 headerName: "Rank",
-                valueGetter: (params: ValueGetterParams<Player>) =>
-                    params.data?.rank,
+                valueGetter: (params: ValueGetterParams<Player>) => params.data?.rank,
                 width: 70,
             },
             "Pos #": {
                 headerName: "Pos #",
-                valueGetter: (params: ValueGetterParams<Player>) =>
-                    params.data?.posRank,
+                valueGetter: (params: ValueGetterParams<Player>) => params.data?.posRank,
                 width: 70,
             },
             Pos: {
                 headerName: "Pos",
-                valueGetter: (params: ValueGetterParams<Player>) =>
-                    params.data?.position,
+                valueGetter: (params: ValueGetterParams<Player>) => params.data?.position,
                 width: 80,
             },
             Name: {
@@ -76,20 +66,17 @@ export const StandardPlayerGrid: React.FC<PlayerGridProps> = (
             },
             Age: {
                 headerName: "Age",
-                valueGetter: (params: ValueGetterParams<Player>) =>
-                    params.data?.age,
+                valueGetter: (params: ValueGetterParams<Player>) => params.data?.age,
                 width: 80,
             },
             Team: {
                 headerName: "Team",
-                valueGetter: (params: ValueGetterParams<Player>) =>
-                    params.data?.team ?? "FA",
+                valueGetter: (params: ValueGetterParams<Player>) => params.data?.team ?? "FA",
                 width: 80,
             },
             College: {
                 headerName: "College",
-                valueGetter: (params: ValueGetterParams<Player>) =>
-                    params.data?.college,
+                valueGetter: (params: ValueGetterParams<Player>) => params.data?.college,
                 width: 160,
             },
             "Grid Actions": {
@@ -118,9 +105,5 @@ export const StandardPlayerGrid: React.FC<PlayerGridProps> = (
         setBoard({ ...board!, Players: updatedPlayers });
     };
 
-    return (
-        <DataGridWrapper
-            {...{ data, columnDefs, onRowDragEnd, height, width }}
-        />
-    );
+    return <DataGridWrapper {...{ data, columnDefs, onRowDragEnd, height, width }} />;
 };

@@ -1,11 +1,5 @@
 import React, { useEffect, useState, SyntheticEvent } from "react";
-import {
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    IconButton,
-    TextField,
-} from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, IconButton, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Player } from "../player";
 import StatTable from "./StatTable";
@@ -18,12 +12,7 @@ type PlayerModalProps = {
     imageUrl: string;
 };
 
-const PlayerModal: React.FC<PlayerModalProps> = ({
-    player,
-    open,
-    onClose,
-    imageUrl,
-}: PlayerModalProps) => {
+const PlayerModal: React.FC<PlayerModalProps> = ({ player, open, onClose, imageUrl }: PlayerModalProps) => {
     const [playerStats, setPlayerStats] = useState<PlayerStatParent[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -36,26 +25,16 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
                 setLoading(false);
             };
             fetchStats();
-        } else {
-            setPlayerStats([]);
-        }
+            return;
+        } 
+        setPlayerStats([]);
     }, [open, player]);
 
-    const handleImageError = (
-        event: SyntheticEvent<HTMLImageElement, Event>
-    ) => {
-        event.currentTarget.src =
-            "https://sleepercdn.com/images/v2/icons/player_default.webp";
-    };
+    const handleImageError = (event: SyntheticEvent<HTMLImageElement, Event>) =>
+        event.currentTarget.src = "https://sleepercdn.com/images/v2/icons/player_default.webp";
 
     return (
-        <Dialog
-            open={open}
-            onClose={onClose}
-            aria-labelledby="player-modal"
-            maxWidth="md"
-            fullWidth
-        >
+        <Dialog open={open} onClose={onClose} aria-labelledby="player-modal" maxWidth="md" fullWidth>
             <DialogTitle id="player-modal">
                 {player.full_name}
                 <IconButton
@@ -96,14 +75,10 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
                         rows={4}
                         defaultValue=""
                         variant="filled"
-                        fullWidth 
+                        fullWidth
                     />
                 </div>
-                {loading ? (
-                    <div>Loading stats...</div>
-                ) : (
-                    <StatTable rows={playerStats} position={player.position} />
-                )}
+                {loading ? <div>Loading stats...</div> : <StatTable rows={playerStats} position={player.position} />}
             </DialogContent>
         </Dialog>
     );

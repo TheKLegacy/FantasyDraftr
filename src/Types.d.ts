@@ -4,11 +4,11 @@ import { FilterValues } from "./Shared/Filters";
 type DraftedBoard = {
     Players: PlayerDrafted[];
     Pick: number;
-}
+};
 
 type buttonForModalProps = {
     openModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
 type SleeperDraft = {
     draft_id: string;
@@ -51,4 +51,4 @@ type BoardPayload = {
     Name: string;
     Filters: FilterValues;
     Players: string[];
-}
+};
