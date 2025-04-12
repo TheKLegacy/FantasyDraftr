@@ -54,5 +54,6 @@ type BoardPayload = {
 };
 
 type PlayerNote = {
-    [key: string]: any;
+    playerId: string;
+    content: string;
 }

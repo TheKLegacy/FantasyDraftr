@@ -106,4 +106,4 @@ export const allBoardsAtom = atom(
 
 export const cleanedPlayersAtom = atom<Player[]>([]);
 
-export const playerNotes = atom<PlayerNote>({});
+export const playerNotes = atomWithStorage<PlayerNote[]>("playerNotes",[]);

@@ -3,7 +3,8 @@ import { TextField } from "@mui/material";
 import { useAtom } from "jotai";
 import { playerNotes } from "../../Atoms";
 import { debounce } from "lodash";
-import { writeUserNotes } from "../../Firebase/Firestore";
+import { writeUserNotes, getUserPlayerNote } from "../../Firebase/Firestore";
+import { user } from "../../Firebase/FirebaseAuth";
 
 type NoteProps = {
     playerId: string;
@@ -13,51 +14,65 @@ const PlayerModal: React.FC<NoteProps> = ({ playerId }) => {
     const [notes, setNotes] = useAtom(playerNotes);
     const [inputValue, setInputValue] = useState("");
     const pendingNoteRef = useRef<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    // Initialize the input value from stored notes if available
+    // Fetch player note from Firebase or local state on mount
     useEffect(() => {
-        writeUserNotes(notes);
-        if (notes[playerId]) {
-            setInputValue(notes[playerId]);
-        } else {
-            setInputValue(""); // Reset if no notes exist for this player
-        }
-    }, [playerId, notes]);
+        const fetchPlayerNote = async () => {
+            setIsLoading(true);
+            const playerNote = user
+                ? await getUserPlayerNote(playerId)
+                : notes.find((note) => note.playerId === playerId);
+            setInputValue(playerNote?.content ?? "");
+            setIsLoading(false);
+        };
+        fetchPlayerNote();
+    }, []);
 
-    // Create a debounced function to update notes
-    const debouncedSetNotes = useCallback(
-        debounce((value: string) => {
-            setNotes((prevNotes) => ({
-                ...prevNotes,
-                [playerId]: value,
-            }));
-            pendingNoteRef.current = null;
-        }, 500), 
-        [playerId, setNotes]
-    );
-
-    // Handle input changes
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
-        setInputValue(newValue); // Update local state immediately for responsive UI
-        pendingNoteRef.current = newValue; // Store the latest value in ref
-        debouncedSetNotes(newValue); // Debounce the actual state update
+        setInputValue(newValue);
+        pendingNoteRef.current = newValue;
+        debouncedSetNotes(newValue);
     };
 
-    // Save any pending changes on unmount
+    const saveNote = useCallback(
+        (content: string) => {
+            const note = { playerId, content };
+
+            !user &&
+                setNotes((prevNotes) => {
+                    const noteIndex = prevNotes.findIndex((note) => note.playerId === playerId);
+                    if (noteIndex >= 0) {
+                        const updatedNotes = [...prevNotes];
+                        updatedNotes[noteIndex] = note;
+                        return updatedNotes;
+                    }
+                    return [...prevNotes, note];
+                });
+
+            user && writeUserNotes(note);
+        },
+        [playerId, setNotes, user]
+    );
+
+    const debouncedSetNotes = useCallback(
+        debounce((value: string) => {
+            saveNote(value);
+            pendingNoteRef.current = null;
+        }, 500),
+        [saveNote]
+    );
+
     useEffect(() => {
         return () => {
             debouncedSetNotes.cancel();
-
             if (pendingNoteRef.current !== null) {
-                setNotes((prevNotes) => ({
-                    ...prevNotes,
-                    [playerId]: pendingNoteRef.current as string,
-                }));
+                saveNote(pendingNoteRef.current);
                 console.log("saving note on unmount for player:", playerId);
             }
         };
-    }, [debouncedSetNotes, playerId, setNotes]);
+    }, [debouncedSetNotes, saveNote]);
 
     return (
         <TextField
@@ -69,6 +84,7 @@ const PlayerModal: React.FC<NoteProps> = ({ playerId }) => {
             onChange={handleChange}
             variant="filled"
             fullWidth
+            disabled={isLoading}
         />
     );
 };
