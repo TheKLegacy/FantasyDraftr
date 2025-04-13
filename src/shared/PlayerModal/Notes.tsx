@@ -14,15 +14,18 @@ const PlayerModal: React.FC<NoteProps> = ({ playerId }) => {
     const [notes, setNotes] = useAtom(playerNotes);
     const [inputValue, setInputValue] = useState("");
     const pendingNoteRef = useRef<string | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); 
 
     // Fetch player note from Firebase or local state on mount
     useEffect(() => {
+        console.log("fetching player notes", playerId)
         const fetchPlayerNote = async () => {
             setIsLoading(true);
             const playerNote = user
                 ? await getUserPlayerNote(playerId)
                 : notes.find((note) => note.playerId === playerId);
+            console.log("notes", notes)
+            console.log("playernotes",playerNote)
             setInputValue(playerNote?.content ?? "");
             setIsLoading(false);
         };
