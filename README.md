@@ -20,9 +20,8 @@ npm run start
   - Done via firebase, need a better URL
 - Code Cleanup
   - Ongoing
-- Notes
 - Set up email verification to as a requirment when logged in.
-- Reorder based on other draft adps
+- Reorder based on other draft adps //Will do later in the summer, don't really need it until preseason
 - Add tests to codify behavior
 - Add logo/name top right
 - Add website & socials in footer.
