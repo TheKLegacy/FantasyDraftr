@@ -18,14 +18,11 @@ const PlayerModal: React.FC<NoteProps> = ({ playerId }) => {
 
     // Fetch player note from Firebase or local state on mount
     useEffect(() => {
-        console.log("fetching player notes", playerId)
         const fetchPlayerNote = async () => {
             setIsLoading(true);
             const playerNote = user
                 ? await getUserPlayerNote(playerId)
                 : notes.find((note) => note.playerId === playerId);
-            console.log("notes", notes)
-            console.log("playernotes",playerNote)
             setInputValue(playerNote?.content ?? "");
             setIsLoading(false);
         };
@@ -70,10 +67,7 @@ const PlayerModal: React.FC<NoteProps> = ({ playerId }) => {
     useEffect(() => {
         return () => {
             debouncedSetNotes.cancel();
-            if (pendingNoteRef.current !== null) {
-                saveNote(pendingNoteRef.current);
-                console.log("saving note on unmount for player:", playerId);
-            }
+            pendingNoteRef.current !== null && saveNote(pendingNoteRef.current);  
         };
     }, [debouncedSetNotes, saveNote]);
 
