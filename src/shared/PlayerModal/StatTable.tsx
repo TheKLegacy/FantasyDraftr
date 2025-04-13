@@ -5,8 +5,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { PlayerStatParent } from "../../Scripts/SleeperGetPlayer";
-import { positions } from "../../player";
+import type { PlayerStatParent } from "../../Scripts/SleeperGetPlayer";
+import type { positions } from "../../player";
 
 type statTableProps = {
     rows: PlayerStatParent[];
@@ -55,8 +55,8 @@ const StatTable: React.FC<statTableProps> = ({ rows, position }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <TableRow>
+                    {rows.map((row, index) => (
+                        <TableRow key={index}>
                             <TableCell>{row.season}</TableCell>
                             <TableCell align="right">{row.stats.pos_rank_ppr}</TableCell>
                             <TableCell align="right">{row.stats.gp}</TableCell>

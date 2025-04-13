@@ -6,7 +6,7 @@ import type { Player } from "./player";
 import type { DraftedBoard, PlayerNote, SleeperDraft, SleeperPick } from "./Types";
 import { writeUserBoards } from "./Firebase/Firestore";
 import { filterPlayers } from "./Shared/utils";
-import { User } from "firebase/auth";
+import type { User } from "firebase/auth";
 
 export const currentBoardAtom = atom<String>("Unnamed Board");
 

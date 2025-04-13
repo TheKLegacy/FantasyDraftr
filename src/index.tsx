@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import playerData from "../data/players.json";

@@ -1,6 +1,6 @@
-import { Player } from "../player";
-import { Board } from "../Shared/Filters";
-import { BoardPayload } from "../Types";
+import type { Player } from "../player";
+import type { Board } from "../Shared/Filters";
+import type { BoardPayload } from "../Types";
 import playerData from "../../data/players.json";
 
 const playerObjects = Object.values(playerData) as unknown as Player[];

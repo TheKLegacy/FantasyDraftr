@@ -1,5 +1,5 @@
 import { FormControlLabel, Switch, Box } from "@mui/material";
-import React, { ChangeEvent } from "react";
+import React, { type ChangeEvent } from "react";
 import type { Player } from "../player";
 
 const filterKeys = ["QB", "RB", "WR", "TE", "Rookies Only"] as const;

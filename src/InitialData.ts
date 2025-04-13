@@ -1,4 +1,4 @@
-import { Board } from "./Shared/Filters";
+import type { Board } from "./Shared/Filters";
 
 export const initialBoard: Board = {
     Name: "Unnamed Board",
