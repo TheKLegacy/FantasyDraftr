@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { ColDef, RowDragEndEvent } from "ag-grid-community";
+import type { ColDef, RowDragEndEvent } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 

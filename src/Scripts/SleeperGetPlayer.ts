@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Player } from "../player";
+import type { Player } from "../player";
 
 export type PlayerStatParent = {
     stats: Record<string, number>;

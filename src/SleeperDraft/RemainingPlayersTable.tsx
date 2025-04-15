@@ -3,7 +3,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import { useAtom, useAtomValue } from "jotai";
 import { filteredPlayersAtom, remainingPlayersAtom } from "../Atoms";
-import { PlayerColumns, StandardPlayerGrid } from "../Shared/Grid/StandardPlayerGrid";
+import { type PlayerColumns, StandardPlayerGrid } from "../Shared/Grid/StandardPlayerGrid";
 import { useSleeperDraft } from "../Hooks/useSleeperDraft";
 
 export const RemainingPlayersTable: React.FC = () => {

@@ -1,5 +1,5 @@
-import { PlayerDrafted } from "./player";
-import { FilterValues } from "./Shared/Filters";
+import type { PlayerDrafted } from "./player";
+import type { FilterValues } from "./Shared/Filters";
 
 type DraftedBoard = {
     Players: PlayerDrafted[];

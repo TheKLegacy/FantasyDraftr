@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { ColDef, ValueGetterParams } from "ag-grid-community";
+import type { ColDef, ValueGetterParams } from "ag-grid-community";
 import { useAtomValue } from "jotai";
 import { draftedBoardAtom, teamsAtom } from "../Atoms";
 import { PlayerNameCellRenderer } from "../Shared/PlayerNameCellRenderer";

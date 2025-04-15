@@ -1,4 +1,4 @@
-import { FilterTypes } from "./Shared/Filters";
+import type { FilterTypes } from "./Shared/Filters";
 
 type Player = {
     player_id: string;

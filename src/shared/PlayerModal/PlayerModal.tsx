@@ -1,9 +1,9 @@
-import React, { useEffect, useState, SyntheticEvent } from "react";
-import { Dialog, DialogContent, DialogTitle, IconButton, TextField } from "@mui/material";
+import React, { useEffect, useState, type SyntheticEvent } from "react";
+import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { Player } from "../../player";
+import type { Player } from "../../player";
 import StatTable from "./StatTable";
-import { getPlayerStats, PlayerStatParent } from "../../Scripts/SleeperGetPlayer";
+import { getPlayerStats, type PlayerStatParent } from "../../Scripts/SleeperGetPlayer";
 import Notes from "./Notes";
 
 type PlayerModalProps = {
