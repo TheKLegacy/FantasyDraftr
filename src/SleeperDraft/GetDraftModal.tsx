@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { displayModeAtom, getCurrentBoardAtom, remainingPlayersAtom, sleeperDraftIdAtom } from "../Atoms";
+import { displayModeAtom, getCurrentBoardAtom, remainingPlayersAtom, sleeperDraftIdAtom, sleeperUserAtom } from "../Atoms";
 
 type DraftBoardDialogProps = {
     open: boolean;
@@ -10,6 +10,7 @@ type DraftBoardDialogProps = {
 
 const GetDraftModal: React.FC<DraftBoardDialogProps> = ({ open, onClose }) => {
     const [sleeperDraftId, setSleeperDraftId] = useAtom(sleeperDraftIdAtom);
+    const [sleeperUser, setSleeperUser] = useAtom(sleeperUserAtom);
     const setDisplayMode = useSetAtom(displayModeAtom);
     const setRemainingPlayers = useSetAtom(remainingPlayersAtom);
     const currentBoard = useAtomValue(getCurrentBoardAtom);
@@ -37,13 +38,21 @@ const GetDraftModal: React.FC<DraftBoardDialogProps> = ({ open, onClose }) => {
                     value={sleeperDraftId}
                     onChange={(e) => setSleeperDraftId(e.target.value)}
                 />
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Sleeper Username"
+                    fullWidth
+                    value={sleeperUser}
+                    onChange={(e) => setSleeperUser(e.target.value)}
+                />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleCancel} color="secondary">
                     Cancel
                 </Button>
                 <Button onClick={handleCreate} color="primary" variant="contained" disabled={!sleeperDraftId.trim()}>
-                    Create
+                    Join
                 </Button>
             </DialogActions>
         </Dialog>

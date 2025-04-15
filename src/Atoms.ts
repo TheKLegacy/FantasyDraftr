@@ -19,13 +19,14 @@ export const draftedBoardAtom = atom<DraftedBoard>({ Players: [], Pick: 0 });
 
 export const teamsAtom = atom<number>(12);
 
+export const sleeperUserAtom = atom<string>("");
 export const sleeperDraftIdAtom = atom<string>("");
 export const sleeperDraftAtom = atom<SleeperDraft | null>(null);
 export const sleeperPicksAtom = atom<SleeperPick[]>([]);
 
 export const draftPlayerAction = atom(null, (get, set, payload: Player) => {
-    let board = get(draftBoardAtom);
-    let draftedPlayersBoard = get(draftedBoardAtom);
+    const board = get(draftBoardAtom);
+    const draftedPlayersBoard = get(draftedBoardAtom);
     const updatedPlayers = board!.Players.filter((p) => p.player_id !== payload.player_id);
     const updatedDraftedPlayers = [...draftedPlayersBoard.Players, { ...payload, Pick: draftedPlayersBoard.Pick + 1 }];
     set(draftBoardAtom, { ...board!, Players: updatedPlayers });
