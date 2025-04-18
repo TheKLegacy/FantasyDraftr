@@ -22,6 +22,7 @@ export const RemainingPlayersTable: React.FC = () => {
                 setBoard,
                 height: "75vh",
                 width: "900px",
+                highlightedRows: [12, 24]
             }}
         />
     );

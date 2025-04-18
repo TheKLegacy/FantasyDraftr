@@ -23,6 +23,7 @@ export const sleeperUserAtom = atom<string>("");
 export const sleeperDraftIdAtom = atom<string>("");
 export const sleeperDraftAtom = atom<SleeperDraft | null>(null);
 export const sleeperPicksAtom = atom<SleeperPick[]>([]);
+export const sleeperPlayerPicksAtom = atom<number[]>();
 
 export const draftPlayerAction = atom(null, (get, set, payload: Player) => {
     const board = get(draftBoardAtom);

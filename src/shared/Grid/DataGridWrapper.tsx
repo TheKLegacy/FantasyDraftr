@@ -1,28 +1,28 @@
 import React, { useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
-import type { ColDef, RowDragEndEvent } from "ag-grid-community";
+import type { ColDef, RowClassParams, RowDragEndEvent } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
-interface DataGridWrapperProps<T> {
+type DataGridWrapperProps<T> = {
     data: T[];
     columnDefs: ColDef<T>[];
     onRowDragEnd?: (event: RowDragEndEvent) => void;
     defaultColumnConfig?: Partial<ColDef<T>>;
     height?: string;
     width?: string;
-}
+    highlightedRows?: number[];
+};
 
 const DataGridWrapper = <T,>(props: DataGridWrapperProps<T>) => {
-    const { data, columnDefs, onRowDragEnd } = props;
-
-    // Memoize row data to prevent unnecessary re-renders
+    const { data, columnDefs, onRowDragEnd, height, width, highlightedRows } = props;
     const rowData = useMemo(() => data.slice(0, 500), [data]);
-
-    // Default column configuration with ability to override
     const defaultColDef = useMemo(() => {
         return { sortable: false };
     }, []);
+    const getRowStyle = (params: RowClassParams) => {
+        if (highlightedRows?.includes(params.rowIndex + 1)) return { background: "#6E4D25" };
+    };
 
     return (
         <div
@@ -37,8 +37,8 @@ const DataGridWrapper = <T,>(props: DataGridWrapperProps<T>) => {
             <div
                 className="ag-theme-alpine-dark"
                 style={{
-                    height: props.height,
-                    width: props.width,
+                    height: height,
+                    width: width,
                     marginTop: "1em",
                 }}
             >
@@ -58,6 +58,7 @@ const DataGridWrapper = <T,>(props: DataGridWrapperProps<T>) => {
                     suppressScrollOnNewData={true}
                     suppressDragLeaveHidesColumns={true}
                     suppressCellFocus={true}
+                    getRowStyle={getRowStyle}
                 />
             </div>
         </div>

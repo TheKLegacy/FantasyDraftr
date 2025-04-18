@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import axios from "axios";
-import { sleeperDraftAtom, sleeperDraftIdAtom, sleeperPicksAtom, remainingPlayersAtom } from "../Atoms";
+import { sleeperDraftAtom, sleeperDraftIdAtom, sleeperPicksAtom, remainingPlayersAtom, sleeperPlayerPicksAtom, sleeperUserAtom } from "../Atoms";
 import { SleeperDraft, SleeperPick } from "../Types";
 
 type UseSleeperDraftResult = {
@@ -12,16 +12,32 @@ type UseSleeperDraftResult = {
 //This handles watching the sleeper draft and removing players
 export function useSleeperDraft(): UseSleeperDraftResult {
     const draftId = useAtomValue(sleeperDraftIdAtom);
+    const sleeperUser = useAtomValue(sleeperUserAtom); 
     const setRemainingPlayers = useSetAtom(remainingPlayersAtom);
     const [draft, setDraft] = useAtom(sleeperDraftAtom);
     const setPicks = useSetAtom(sleeperPicksAtom);
+    const setPlayerPicks = useSetAtom(sleeperPlayerPicksAtom);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
+    let sleeperUserId = null;
 
     const fetchDraft = useCallback(async () => {
         try {
             setIsLoading(true);
             const { data } = await axios.get<SleeperDraft>(`https://api.sleeper.app/v1/draft/${draftId}`);
+            setDraft(data);
+        } catch (err) {
+            setError(err instanceof Error ? err : new Error("An unknown error occurred"));
+        } finally {
+            setIsLoading(false);
+        }
+    }, [draftId, setDraft]);
+
+    const fetchSleeperUser = useCallback(async () => {
+        if(!sleeperUser) return;
+        try {
+            setIsLoading(true);
+            const { data } = await axios.get<SleeperDraft>(`https://api.sleeper.app/v1/user/${sleeperUser}`);
             setDraft(data);
         } catch (err) {
             setError(err instanceof Error ? err : new Error("An unknown error occurred"));
@@ -51,6 +67,7 @@ export function useSleeperDraft(): UseSleeperDraftResult {
     useEffect(() => {
         fetchDraft();
         fetchPicks();
+        fetchSleeperUser();
     }, [fetchDraft]);
 
     useEffect(() => {

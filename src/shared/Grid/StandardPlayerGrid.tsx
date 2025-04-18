@@ -30,10 +30,11 @@ type PlayerGridProps = {
     setBoard: (payload: Board) => void;
     height?: string;
     width?: string;
+    highlightedRows?: number[];
 };
 
 export const StandardPlayerGrid: React.FC<PlayerGridProps> = (props: PlayerGridProps) => {
-    const { columns, data, currentPlayers, board, setBoard, height, width } = props;
+    const { columns, data, currentPlayers, board, setBoard, height, width, highlightedRows } = props;
 
     const draft = useSetAtom(draftPlayerAction);
 
@@ -105,5 +106,5 @@ export const StandardPlayerGrid: React.FC<PlayerGridProps> = (props: PlayerGridP
         setBoard({ ...board!, Players: updatedPlayers });
     };
 
-    return <DataGridWrapper {...{ data, columnDefs, onRowDragEnd, height, width }} />;
+    return <DataGridWrapper {...{ data, columnDefs, onRowDragEnd, height, width, highlightedRows }} />;
 };
