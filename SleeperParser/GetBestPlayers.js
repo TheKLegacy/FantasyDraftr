@@ -83,7 +83,7 @@ const adpPropsToRemove = [
 async function fetchData() {
     try {
         const { data: rawPlayerAdpData } = await axios.get(
-            "https://api.sleeper.com/projections/nfl/2025?season_type=regular&position[]=DB&position[]=DEF&position[]=DL&position[]=K&position[]=LB&position[]=QB&position[]=RB&position[]=TE&position[]=WR&order_by=adp_dynasty_2qb"
+            "https://api.sleeper.com/projections/nfl/2026?season_type=regular&position[]=DB&position[]=DEF&position[]=DL&position[]=K&position[]=LB&position[]=QB&position[]=RB&position[]=TE&position[]=WR&order_by=adp_dynasty_2qb"
         );
         let { data: rawPlayerData } = await axios.get("https://api.sleeper.app/v1/players/nfl?limit=2000");
         rawPlayerData = Object.values(rawPlayerData);
@@ -117,7 +117,7 @@ async function processData() {
             .sort((a, b) => a.adpStats.adp_dynasty_2qb - b.adpStats.adp_dynasty_2qb)
             .slice(0, 500);
 
-        const outputFilePath = path.join("../data/", "players.json");
+        const outputFilePath = path.join(__dirname, "..", "data", "players.json");
         fs.writeFileSync(outputFilePath, JSON.stringify(sortedPlayerData, null, 2));
         console.log("Top 500 entries have been saved to", outputFilePath);
     } catch (error) {
