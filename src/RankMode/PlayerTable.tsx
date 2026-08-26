@@ -8,7 +8,7 @@ export const PlayerTable: React.FC = () => {
     const currentPlayers = useAtomValue(currentPlayersAtom);
     const board = useAtomValue(getCurrentBoardAtom);
     const setBoard = useSetAtom(updateBoardAction);
-    const columns: PlayerColumns[] = ["#", "Rank", "Pos #", "Pos", "Name", "Team", "Age", "College", "Grid Actions"];
+    const columns: PlayerColumns[] = ["#", "Overall", "Rank", "Pos #", "Pos", "Name", "Team", "Age", "College", "Grid Actions"];
     return (
         <StandardPlayerGrid
             {...{
@@ -18,7 +18,7 @@ export const PlayerTable: React.FC = () => {
                 board,
                 setBoard,
                 height: "75vh",
-                width: "1080px",
+                width: "1180px",
             }}
         />
     );

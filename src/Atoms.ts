@@ -3,10 +3,11 @@ import { initialBoard } from "./InitialData";
 import { atomFamily, atomWithStorage } from "jotai/utils";
 import type { Board } from "./Shared/Filters";
 import type { Player } from "./player";
-import type { DraftedBoard, PlayerNote, SleeperDraft, SleeperPick } from "./Types";
+import type { BoardPayload, DraftedBoard, PlayerNote, SleeperDraft, SleeperPick } from "./Types";
 import { writeUserBoards } from "./Firebase/Firestore";
 import { filterPlayers } from "./Shared/utils";
 import type { User } from "firebase/auth";
+import { allocateBoards } from "./Scripts/AllocatePlayersToBoards";
 
 export const currentBoardAtom = atom<String>("Unnamed Board");
 
@@ -77,15 +78,26 @@ export const deleteCurrentBoardAction = atom(null, (get, set) => {
 
 export const currentFiltersAtom = atom((get) => get(getCurrentBoardAtom).Filters);
 export const currentPlayersAtom = atom((get) => get(getCurrentBoardAtom).Players);
+export const playerSearchAtom = atom<string>("");
 
 export const filteredPlayersAtom = atomFamily((boardAtom: Atom<Board | undefined>) =>
     atom((get) => {
         const board = get(boardAtom);
-        return board ? filterPlayers(board.Players, board.Filters) : [];
+        const search = get(playerSearchAtom).trim().toLowerCase();
+        const players = board
+            ? filterPlayers(board.Players, board.Filters)
+            : [];
+        return search
+            ? players.filter((player) =>
+                  [player.full_name, player.first_name, player.last_name, player.team, player.position]
+                      .filter(Boolean)
+                      .some((value) => String(value).toLowerCase().includes(search))
+              )
+            : players;
     })
 );
 
-export const allBoardsStorageAtom = atomWithStorage<Board[]>("DraftBoards", [initialBoard]);
+export const allBoardsStorageAtom = atomWithStorage<BoardPayload[]>("DraftBoards", [{ ...initialBoard, Players: [] }]);
 
 export const userAtom = atom<User>();
 
@@ -94,14 +106,17 @@ export const allBoardsUserAtom = atom<Board[]>([]);
 export const allBoardsAtom = atom(
     (get) => {
         const user = get(userAtom);
-        return user ? get(allBoardsUserAtom) : get(allBoardsStorageAtom);
+        return user ? get(allBoardsUserAtom) : allocateBoards(get(allBoardsStorageAtom));
     },
     (get, set, newValue: Board[]) => {
         const user = get(userAtom);
         if (user) {
             set(allBoardsUserAtom, newValue);
         } else {
-            set(allBoardsStorageAtom, newValue);
+            set(
+                allBoardsStorageAtom,
+                newValue.map((board) => ({ ...board, Players: board.Players.map((player) => player.player_id) }))
+            );
         }
     }
 );

@@ -1,6 +1,8 @@
-import { FormControlLabel, Switch, Box } from "@mui/material";
+import { FormControlLabel, Switch, Box, TextField } from "@mui/material";
 import React, { type ChangeEvent } from "react";
 import type { Player } from "../player";
+import { useAtom } from "jotai";
+import { playerSearchAtom } from "../Atoms";
 
 const filterKeys = ["QB", "RB", "WR", "TE", "Rookies Only"] as const;
 
@@ -22,6 +24,7 @@ export type filterProps = {
 export const Filters: React.FC<filterProps> = (props: filterProps) => {
     const filters = props.board.Filters;
     const board = props.board;
+    const [search, setSearch] = useAtom(playerSearchAtom);
 
     const updateFilter = (event: ChangeEvent<HTMLInputElement>, filterProp: keyof typeof filters) => {
         props.setBoard({
@@ -35,6 +38,13 @@ export const Filters: React.FC<filterProps> = (props: filterProps) => {
 
     return (
         <Box display="flex" flexWrap="wrap" gap={2} justifyContent="center" alignItems="center" sx={{ width: "100%" }}>
+            <TextField
+                size="small"
+                label="Search players"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                sx={{ minWidth: 220 }}
+            />
             {filterKeys.map((filterKey) => (
                 <FormControlLabel
                     key={filterKey}

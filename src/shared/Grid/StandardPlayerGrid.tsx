@@ -12,6 +12,7 @@ import { handleDrag } from "./HandleDrag";
 
 export type PlayerColumns =
     | "#"
+    | "Overall"
     | "Rank"
     | "Pos #"
     | "Pos"
@@ -45,6 +46,14 @@ export const StandardPlayerGrid: React.FC<PlayerGridProps> = (props: PlayerGridP
                 headerName: "#",
                 valueGetter: "node.rowIndex + 1",
                 width: 70,
+            },
+            Overall: {
+                headerName: "Overall",
+                valueGetter: (params: ValueGetterParams<Player>) => {
+                    const playerIndex = currentPlayers.findIndex((player) => player.player_id === params.data?.player_id);
+                    return playerIndex >= 0 ? playerIndex + 1 : "";
+                },
+                width: 85,
             },
             Rank: {
                 headerName: "Rank",
@@ -83,6 +92,7 @@ export const StandardPlayerGrid: React.FC<PlayerGridProps> = (props: PlayerGridP
             "Grid Actions": {
                 headerName: "Actions",
                 cellRenderer: Actions,
+                width: 260,
             },
             Actions: {
                 headerName: "Actions",
@@ -93,7 +103,7 @@ export const StandardPlayerGrid: React.FC<PlayerGridProps> = (props: PlayerGridP
                 ),
             },
         }),
-        []
+        [currentPlayers]
     );
 
     // Dynamically generate column definitions based on passed columns

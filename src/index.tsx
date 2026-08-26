@@ -9,6 +9,7 @@ import "@fontsource/roboto/700.css";
 import { useAtomValue, useSetAtom } from "jotai";
 import { allBoardsAtom, cleanedPlayersAtom, currentBoardAtom, displayModeAtom } from "./Atoms";
 import { initialBoard } from "./InitialData";
+import { allocateBoards } from "./Scripts/AllocatePlayersToBoards";
 import { DraftModeContainer } from "./DraftMode/DraftModeContaier";
 import { RankModeContainer } from "./RankMode/RankModeContainer";
 import ProfileIcon from "./AuthComponents/ProfileIcon";
@@ -31,8 +32,8 @@ const App: React.FC = () => {
         players.forEach((player: Player, index: number) => {
             player.rank = index + 1;
         });
-        initialBoard.Players = players;
-        const existingBoards = (JSON.parse(localStorage.getItem("DraftBoards") ?? "null") as Board[]) ?? [initialBoard];
+        const storedBoards = (JSON.parse(localStorage.getItem("DraftBoards") ?? "null") as Board[]) ?? [initialBoard];
+        const existingBoards = allocateBoards(storedBoards);
         setCleanedPlayers(players);
         setBoards(existingBoards);
         setCurrentBoard(existingBoards[0].Name);

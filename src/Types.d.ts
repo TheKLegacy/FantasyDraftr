@@ -31,6 +31,23 @@ type SleeperDraft = {
     [key: string]: any;
 };
 
+type SleeperUser = {
+    user_id: string;
+    username: string;
+    display_name: string;
+    avatar: string | null;
+};
+
+type SleeperLeague = {
+    league_id: string;
+    draft_id: string;
+    name: string;
+    season: string;
+    sport: string;
+    status: string;
+    avatar: string | null;
+};
+
 type SleeperPick = {
     player_id: string;
     picked_by: string;
