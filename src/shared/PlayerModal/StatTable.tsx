@@ -40,15 +40,17 @@ function getStatColumns(position: positions): { statKeys: string[]; statDisplayN
 
 const StatTable: React.FC<statTableProps> = ({ rows, position }) => {
     const statColumns = getStatColumns(position);
+    const getStatValue = (stats: Record<string, number>, key: string) =>
+        stats[key] ?? (key === "rec_yd" ? stats.rec_yar : undefined) ?? "-";
 
     return (
         <TableContainer>
             <Table size="small" aria-label="player stats">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Year</TableCell>
+                        <TableCell>Week</TableCell>
                         <TableCell align="right">PPR Rank</TableCell>
-                        <TableCell align="right">GP</TableCell>
+                        <TableCell align="right">PPR Points</TableCell>
                         {statColumns.statDisplayNames.map((th) => (
                             <TableCell align="right">{th}</TableCell>
                         ))}
@@ -57,11 +59,11 @@ const StatTable: React.FC<statTableProps> = ({ rows, position }) => {
                 <TableBody>
                     {rows.map((row, index) => (
                         <TableRow key={index}>
-                            <TableCell>{row.season}</TableCell>
-                            <TableCell align="right">{row.stats.pos_rank_ppr}</TableCell>
-                            <TableCell align="right">{row.stats.gp}</TableCell>
+                            <TableCell>{row.week}</TableCell>
+                            <TableCell align="right">{row.stats.pos_rank_ppr ?? "-"}</TableCell>
+                            <TableCell align="right">{row.stats.pts_ppr ?? "-"}</TableCell>
                             {statColumns.statKeys.map((td) => (
-                                <TableCell align="right">{row.stats[td]}</TableCell>
+                                <TableCell key={td} align="right">{getStatValue(row.stats, td)}</TableCell>
                             ))}
                         </TableRow>
                     ))}
