@@ -43,10 +43,12 @@ export const Actions: React.FC = () => {
                     id="board-name"
                     label="Draft Board"
                     variant="outlined"
+                    size="small"
                     value={board.Name}
                     onChange={onNameChange}
+                    sx={{ minWidth: 220 }}
                 />
-                <FormControl>
+                <FormControl size="small" sx={{ minWidth: 220 }}>
                     <InputLabel id="select-board">Draft Boards</InputLabel>
                     <Select labelId="select-board" value={board.Name} label="Draft Boards">
                         {allBoards.map(({ Name }) => (
